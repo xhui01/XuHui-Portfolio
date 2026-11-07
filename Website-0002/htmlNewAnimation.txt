@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
+<title>Xu Hui, Graphic designer | Portfolio 2026</title>
+<meta name="description" content="Portfolio 2026 of Xu Hui, a graphic designer who makes posters, websites and games.">
+<meta property="og:title" content="Xu Hui, Graphic designer | Portfolio 2026">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Posters, websites and games by Xu Hui, a graphic designer.">
+<meta property="og:image" content="https://YOUR-USERNAME.github.io/portfolio/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F4F0E6">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Xu Hui","jobTitle":"Graphic designer"}</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23F4C46A%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============ 1. TOKENS & DESIGN SYSTEM ============ */
+:root{
+  --paper:#F4F0E6; --paper2:#EAE4D3; --ink:#1F3B35; --deep:#234A40; --muted:#5F6F68;
+  --green:#5B8F5B; --sage:#A6C58E; --pale:#D5E2BC; --sun:#F4C46A; --orange:#D9733A; --orange-text:#B85C25;
+  --font:'Jost',system-ui,sans-serif;
+  --s2:2px; --s4:4px; --s8:8px; --s12:12px; --s16:16px; --s24:24px; --s32:32px; --s40:40px; --s48:48px; --s64:64px; --s80:80px; --s96:96px;
+  --sm:.875rem; --base:1rem; --lg:1.125rem; --xl:1.25rem; --x2:1.5rem; --x3:1.875rem; --x4:2.25rem; --x5:3rem; --x6:3.75rem; --x8:6rem; --x9:8rem;
+  
+  /* ENHANCED MOTION CURVES (elayadesign/ai-design-skills inspired) */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 250ms;
+  --duration-normal: 400ms;
+  --duration-slow: 700ms;
+}
+
+/* ============ 2. BASICS ============ */
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 var(--base)/1.6 var(--font);overflow-x:hidden}
+
+/* Soft paper texture */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:40;opacity:.05;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+p{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance}
+:focus-visible{outline:2px solid var(--deep);outline-offset:var(--s4)}
+section{padding:var(--s96) var(--s24);max-width:1100px;margin:0 auto}
+
+h2{font-weight:300;font-size:var(--x2);letter-spacing:.25em;text-transform:uppercase;color:var(--deep);margin-bottom:var(--s48)}
+h2::after,.title i{content:"";display:block;width:var(--s48);height:var(--s4);background:var(--orange);margin-top:var(--s16);
+  transition: width var(--duration-normal) var(--ease-spring);}
+section:hover h2::after{width: var(--s80);}
+
+.skip{position:absolute;left:var(--s16);top:-100px;background:var(--sun);padding:var(--s8) var(--s12);border-radius:8px;z-index:60;transition:top var(--duration-fast) var(--ease)}
+.skip:focus{top:var(--s16)}
+
+/* ENHANCED BUTTONS & TABS */
+.btn,.tabs button,.dlg button{
+  font:600 var(--base)/1.5 var(--font);letter-spacing:.08em;padding:var(--s8) var(--s12);
+  background:transparent;color:var(--deep);border:1px solid var(--deep);border-radius:9999px;cursor:pointer;text-decoration:none;display:inline-block;
+  transition: background-color var(--duration-normal) var(--ease),
+              color var(--duration-normal) var(--ease),
+              transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease);
+  will-change: transform;
+}
+.btn:hover,.tabs button:hover,.dlg button:hover{
+  background:var(--pale);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(35, 74, 64, 0.12);
+}
+.tabs button[aria-pressed=true]{
+  background:var(--deep);
+  color:var(--paper);
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(35, 74, 64, 0.2);
+}
+.tabs button{font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.btn:active,.tabs button:active,.card:active,nav a:active{transform:scale(.95)!important}
+
+/* ============ 3. NAV ============ */
+nav{
+  position:fixed;top:var(--s16);left:50%;transform:translateX(-50%);z-index:30;display:flex;gap:var(--s4);
+  background:rgba(244,240,230,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(35,74,64,.25);border-radius:9999px;padding:var(--s4);
+  box-shadow: 0 8px 32px rgba(31, 59, 53, 0.08);
+  transition: transform var(--duration-normal) var(--ease), box-shadow var(--duration-normal) var(--ease);
+}
+nav a{
+  text-decoration:none;font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase;padding:var(--s4) var(--s12);border-radius:9999px;
+  transition: background-color var(--duration-normal) var(--ease), transform var(--duration-fast) var(--ease-spring);
+}
+nav a:hover,nav a[aria-current]{
+  background:var(--sun);
+  transform: translateY(-1px);
+}
+
+.mbar{display:none;position:fixed;top:var(--s16);left:var(--s16);right:var(--s16);z-index:55;justify-content:space-between;align-items:center;
+  background:rgba(244,240,230,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(35,74,64,.25);border-radius:9999px;padding:var(--s4) var(--s4) var(--s4) var(--s16)}
+.brand{font-size:var(--sm);font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.menu-btn{position:relative;width:40px;height:40px;background:none;border:0;cursor:pointer;border-radius:9999px}
+.menu-btn i{position:absolute;left:12px;right:12px;height:2px;background:var(--deep);transition:transform var(--duration-normal) var(--ease)}
+.menu-btn i:nth-child(1){top:14px}.menu-btn i:nth-child(2){top:24px}
+.menu-btn[aria-expanded=true] i:nth-child(1){transform:translateY(5px) rotate(45deg)}.menu-btn[aria-expanded=true] i:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+#menu{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:var(--s24);
+  background:rgba(244,240,230,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;visibility:hidden;transition:opacity var(--duration-normal) var(--ease),visibility 0s linear var(--duration-normal)}
+#menu.open{opacity:1;visibility:visible;transition-delay:0s}
+#menu a{font-size:var(--x3);font-weight:300;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(24px);transition:opacity var(--duration-normal) var(--ease),transform var(--duration-normal) var(--ease)}
+#menu.open a{opacity:1;transform:none;transition-delay:calc(min(var(--i)*60ms,400ms))}
+body.noscroll{overflow:hidden}
+
+/* ============ 4. HERO SECTION ============ */
+.hero{position:relative;min-height:100svh;max-width:1280px;margin:0 auto;padding:var(--s80) var(--s24) 0;
+  display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr;row-gap:var(--s16);justify-items:center;text-align:center}
+.title{grid-row:1}
+.title h1{font-weight:300;font-size:var(--x4);letter-spacing:.2em;margin-right:-.2em;text-transform:uppercase;color:var(--deep);line-height:1}
+.title i{margin:var(--s24) auto 0}
+.who{grid-row:2}.year{grid-row:3}.art-hero{grid-row:4;align-self:end;width:100%;max-width:640px}
+.name{font-weight:500;font-size:var(--x2);letter-spacing:.2em;text-transform:uppercase;color:var(--deep);line-height:1.2}
+.role{font-weight:300;font-size:var(--xl);letter-spacing:.08em;color:var(--orange-text)}
+.year{font-weight:300;font-size:var(--x3);letter-spacing:.15em;color:var(--deep)}
+.cta{margin-top:var(--s24)}
+.art-hero svg{display:block;width:100%;height:auto;max-height:70svh}
+.ground{position:absolute;left:0;right:0;bottom:0;height:var(--s2);background:var(--deep)}
+@media(min-width:640px){.title h1{font-size:var(--x6)}}
+@media(min-width:900px){
+  .hero{grid-template-columns:1fr minmax(0,640px) 1fr;grid-template-rows:auto 1fr;column-gap:var(--s24);row-gap:0;text-align:left}
+  .title{grid-column:1/-1;grid-row:1}
+  .who{grid-column:1;grid-row:2;align-self:center;justify-self:end;text-align:right;padding-bottom:var(--s96)}
+  .art-hero{grid-column:2;grid-row:2}
+  .year{grid-column:3;grid-row:2;align-self:center;justify-self:start;font-size:var(--x6);padding-bottom:var(--s96)}
+}
+@media(min-width:1024px){.title h1{font-size:var(--x8)}}
+@media(min-width:1280px){.title h1{font-size:var(--x9)}}
+
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(32px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes sway { to { transform: rotate(6deg); } }
+
+.title, .who, .year { animation: heroUp var(--duration-slow) var(--ease) both; }
+.who { animation-delay: 150ms; }
+.year { animation-delay: 250ms; }
+.art-hero { animation: heroUp 900ms var(--ease) 200ms both; }
+.sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3s ease-in-out infinite alternate; }
+
+/* ============ 5. ABOUT ============ */
+.about-grid{display:grid;gap:var(--s48);align-items:end}
+.portrait{
+  display:block;width:100%;max-width:320px;height:auto;border-radius:9999px 9999px 0 0;overflow:hidden;
+  transition: transform var(--duration-slow) var(--ease), box-shadow var(--duration-slow) var(--ease);
+}
+.about-grid:hover .portrait {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(31, 59, 53, 0.12);
+}
+.about p{font-size:var(--lg);font-weight:300;max-width:560px;line-height:1.8}
+@media(min-width:800px){.about-grid{grid-template-columns:320px 1fr;gap:var(--s64)}.about p{font-size:var(--xl)}}
+
+/* ============ 6. PROJECTS GRID & CARDS ============ */
+.tabs{display:flex;gap:var(--s8);flex-wrap:wrap;margin-bottom:var(--s32)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:var(--s32) var(--s24)}
+.card-title { min-height: 2.8em; }
+
+.card {
+  background: none; border: 0; text-align: left; cursor: pointer; font: inherit; color: inherit;
+  transition: transform var(--duration-normal) var(--ease-spring);
+  will-change: transform;
+}
+.art {
+  aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; background: var(--paper2);
+  transition: transform var(--duration-normal) var(--ease-spring), box-shadow var(--duration-normal) var(--ease);
+  position: relative;
+}
+.art svg, .art img { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--paper2); }
+.art img { opacity: 0; transition: opacity var(--duration-normal) var(--ease), transform var(--duration-slow) var(--ease); }
+.art img.ok { opacity: 1; }
+
+.card:hover { transform: translateY(-8px); }
+.card:hover .art {
+  box-shadow: 0 16px 32px rgba(31, 59, 53, 0.15);
+}
+.card:hover .art img { transform: scale(1.05); }
+
+.card h3 { font-weight: 400; font-size: var(--lg); margin-top: var(--s12); line-height: 1.4; transition: color var(--duration-fast) var(--ease); }
+.card:hover h3 { color: var(--orange-text); }
+.card small { color: var(--muted); font-size: var(--sm); letter-spacing: .12em; text-transform: uppercase; }
+
+.empty { display: grid; gap: var(--s16); justify-items: start; max-width: 232px; color: var(--muted); }
+.empty svg { width: 100%; aspect-ratio: 3/4; border-radius: 16px; }
+
+.tagline { text-align: center; }
+.tagline p { max-width: 680px; margin: 0 auto; font-weight: 300; font-size: var(--x4); line-height: 1.11; color: var(--deep); }
+.tagline .w { opacity: .2; transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease); display: inline-block; }
+.tagline .w.on { opacity: 1; transform: scale(1.02); }
+@media(min-width:640px){.tagline p{font-size:var(--x5);line-height:1}}@media(min-width:1024px){.tagline p{font-size:var(--x6)}}
+
+/* STEPS STYLING */
+.steps{list-style:none;padding:0;display:grid;gap:var(--s32)}
+.steps li {
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+.steps li:hover { transform: translateY(-4px); }
+.steps span{
+  display:grid;place-items:center;width:var(--s48);height:var(--s48);border-radius:9999px;background:var(--sun);font-weight:500;margin-bottom:var(--s16);
+  transition: transform var(--duration-normal) var(--ease-spring), background-color var(--duration-normal) var(--ease);
+}
+.steps li:hover span { transform: scale(1.15) rotate(6deg); background-color: var(--orange); color: var(--paper); }
+.steps h3{font-weight:400;font-size:var(--xl);line-height:1.4}.steps p{font-weight:300;margin-top:var(--s8)}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr);gap:var(--s48)}}
+
+/* ============ MODAL DIALOG ENHANCEMENTS ============ */
+dialog#dlg {
+  border: none; border-radius: 20px; padding: 0; max-width: 900px; width: 90vw; max-height: 85vh; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(31, 59, 53, 0.25); background: #fbf9f4;
+  opacity: 0; transform: scale(0.94) translateY(12px);
+  transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease-spring), overlay var(--duration-normal) allow-discrete, display var(--duration-normal) allow-discrete;
+}
+dialog#dlg[open] {
+  opacity: 1; transform: scale(1) translateY(0);
+}
+@starting-style {
+  dialog#dlg[open] { opacity: 0; transform: scale(0.94) translateY(12px); }
+}
+
+dialog::backdrop {
+  background: rgba(31,59,53,.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease);
+}
+dialog#dlg[open]::backdrop { opacity: 1; }
+
+.dlg { display: flex; flex-direction: row; height: 100%; max-height: 85vh; }
+
+.dlg-media {
+  flex: 1.4; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background-color: #ebdcb9; padding: 24px 16px 16px; gap: 16px; position: relative; overflow: hidden;
+}
+
+.dlg-art-frame {
+  position: relative; width: 100%; flex: 1; display: flex; align-items: center; justify-content: center;
+  border-radius: 16px; overflow: hidden; min-height: 320px;
+}
+.dlg-art-frame img {
+  max-width: 100%; max-height: 52vh; width: auto; height: auto; object-fit: contain;
+  transition: opacity var(--duration-fast) var(--ease), transform var(--duration-normal) var(--ease);
+}
+
+#dlg-desc {
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  line-height: 1.6; min-height: 48px;
+}
+#dlg-desc.fade-out { opacity: 0; transform: translateY(4px); }
+
+.nav-btn {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: 24px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease-spring);
+  z-index: 10;
+}
+.nav-btn:hover { background: rgba(0, 0, 0, 0.8); transform: translateY(-50%) scale(1.1); }
+.prev-btn { left: 14px; } .next-btn { right: 14px; }
+
+.dlg-dots { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 6px 0; }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%; background: transparent; border: 2px solid #234A40; padding: 0; cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease-spring);
+}
+.dot.active { background-color: #234A40; transform: scale(1.3); }
+.dot:hover { opacity: 0.8; }
+
+.dlg-txt { flex: 1; padding: 32px 28px; display: flex; flex-direction: column; justify-content: center; background: #fbf9f4; color: #333; }
+.dlg-txt h3 { font-size: 1.6rem; margin-bottom: 12px; }
+.dlg-txt p { line-height: 1.5; margin-bottom: 16px; color: #555; }
+.dlg-tools { font-size: 0.9rem; color: #777; }
+
+.btn-close {
+  margin-top: 16px; align-self: flex-start; padding: 8px 24px; border: 1px solid #333; border-radius: 20px; background: transparent; cursor: pointer;
+}
+
+@media (max-width: 680px) {
+  .dlg { flex-direction: column; overflow-y: auto; }
+  .dlg-txt { padding: 20px; }
+}
+
+/* ============ 7. SKILLS CHIPS ============ */
+.chips{display:flex;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s32)}
+.chips b{width:100%;font-weight:500;font-size:var(--sm);letter-spacing:.2em;text-transform:uppercase;color:var(--orange-text)}
+.chip{
+  border:1px solid var(--deep);border-radius:9999px;padding:var(--s4) var(--s16);
+  transition: background-color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease-spring);
+  will-change: transform;
+}
+.chip:hover{background:var(--pale); transform: translateY(-2px) scale(1.05);}
+
+/* ============ 8. TIMELINE ============ */
+.tl{list-style:none;padding:0;border-left:1px solid var(--deep);margin-left:var(--s8)}
+.tl li{
+  position:relative;padding:0 0 var(--s40) var(--s32);
+  transition: transform var(--duration-normal) var(--ease);
+}
+.tl li:hover { transform: translateX(4px); }
+.tl li::before{
+  content:"";position:absolute;left:-8px;top:var(--s8);width:16px;height:16px;border-radius:50%;background:var(--sun);
+  transition: transform var(--duration-fast) var(--ease-spring), background-color var(--duration-fast) var(--ease);
+}
+.tl li:hover::before { transform: scale(1.4); background-color: var(--orange); }
+.tl h3{font-weight:400;font-size:var(--xl);line-height:1.4}
+.tl time{color:var(--orange-text);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.tl p{max-width:640px;margin-top:var(--s4);font-weight:300}
+
+/* ============ 9. CONTACT & FOOTER ============ */
+.contact{text-align:center}
+.contact h2::after{margin-left:auto;margin-right:auto}
+.mail{
+  font-weight:300;font-size:var(--x3);letter-spacing:.04em;text-decoration:none;border-bottom:var(--s4) solid var(--orange);
+  transition: background-color var(--duration-normal) var(--ease), padding var(--duration-fast) var(--ease);
+  display: inline-block;
+}
+.mail:hover{background:var(--pale); padding: 0 8px;}
+.links{margin-top:var(--s32);display:flex;gap:var(--s24);justify-content:center;flex-wrap:wrap;font-size:var(--sm);letter-spacing:.15em;text-transform:uppercase}
+footer a{display:inline-block;margin-bottom:var(--s12);color:var(--deep); transition: transform var(--duration-fast) var(--ease);}
+footer a:hover { transform: translateY(-2px); }
+footer{text-align:center;color:var(--muted);padding:var(--s48) var(--s24);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+@media(min-width:640px){.mail{font-size:var(--x5)}}
+
+/* ============ 10. SCROLL REVEAL (STAGGERED ACCORDING TO AI-DESIGN-SKILLS) ============ */
+.js .rise {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity var(--duration-slow) var(--ease), transform var(--duration-slow) var(--ease);
+}
+.js .rise.in { opacity: 1; transform: translateY(0); }
+
+/* Staggered Delay Helpers */
+.grid .card, .steps li, .chips .chip, .tl li {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease-spring);
+}
+.rise.in .card, .rise.in .steps li, .rise.in .chip, .rise.in .tl li {
+  opacity: 1; transform: translateY(0);
+}
+
+@media(max-width:700px){.dlg{grid-template-columns:1fr}.dlg .art{min-height:220px}nav{display:none}.mbar{display:flex}}
+@keyframes fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){
+  .sway{animation:none!important}
+  .title,.who,.year,.art-hero{animation:fade var(--duration-slow) var(--ease) both!important}
+  .js .rise,#menu a,.card:hover .art,.card:hover{transform:none!important}
+  .tagline .w{opacity:1}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main"><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+<div class="mbar"><span class="brand">Xu Hui</span><button class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><i></i><i></i></button></div>
+<div id="menu" aria-label="Menu"></div>
+
+<header class="hero" id="top">
+  <div class="title"><h1>Portfolio</h1><i></i></div>
+  <div class="who"><p class="name">Xu Hui</p><p class="role">Graphic designer</p><p class="cta"><a class="btn" href="#projects">See my work</a></p></div>
+  <p class="year">2026</p>
+  <div class="art-hero">
+    <svg viewBox="0 0 640 600" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Illustration of Xu Hui, smiling, wearing round glasses and a navy blazer">
+      <defs>
+        <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" result="n"/>
+          <feColorMatrix in="n" type="matrix" values="0 0 0 0 .1  0 0 0 0 .15  0 0 0 0 .1  0 0 0 .5 -.14" result="g"/>
+          <feComposite in="g" in2="SourceAlpha" operator="in" result="gg"/><feBlend in="SourceGraphic" in2="gg" mode="multiply"/></filter>
+        <path id="leaf" d="M0 0C14-20 14-46 0-64C-14-46-14-20 0 0Z"/>
+
+        <g id="bg" filter="url(#grain)">
+          <circle cx="320" cy="285" r="172" fill="#DCE7C6"/>
+          <path d="M40 600V270A65 65 0 0 1 105 205V600Z" fill="#5B8F5B"/><path d="M105 600V205A65 65 0 0 1 170 270V600Z" fill="#2F6150"/>
+          <path d="M470 600V290A65 65 0 0 1 535 225V600Z" fill="#A6C58E"/><path d="M535 600V225A65 65 0 0 1 600 290V600Z" fill="#86AF73"/>
+          <circle cx="150" cy="600" r="92" fill="#7DA866"/><circle cx="500" cy="600" r="82" fill="#5B8F5B"/>
+          <circle cx="95" cy="470" r="46" fill="#86AF73"/><circle cx="548" cy="430" r="46" fill="#2F6150"/>
+          <circle cx="112" cy="96" r="46" fill="#F4C46A"/>
+          <g class="sway">
+            <g fill="#D5E2BC"><use href="#leaf" transform="translate(98 565) rotate(-32) scale(1.2)"/><use href="#leaf" transform="translate(98 565) rotate(4) scale(1.35)"/><use href="#leaf" transform="translate(98 565) rotate(36) scale(1.15)"/></g>
+          </g>
+          <g transform="translate(-40, 320)">
+            <g class="sway">
+              <path d="M576 24C562 96 548 170 542 262" fill="none" stroke="#2F6150" stroke-width="3"/>
+              <g fill="#DCE7C6">
+                <use href="#leaf" transform="translate(574 56) rotate(-55) scale(.85)"/>
+                <use href="#leaf" transform="translate(558 138) rotate(-55) scale(.85)"/>
+                <use href="#leaf" transform="translate(547 212) rotate(-55) scale(.8)"/>
+              </g>
+              <g fill="#F4C46A">
+                <use href="#leaf" transform="translate(576 24) rotate(8) scale(.8)"/>
+                <use href="#leaf" transform="translate(567 98) rotate(58) scale(.85)"/>
+                <use href="#leaf" transform="translate(552 174) rotate(58) scale(.85)"/>
+                <use href="#leaf" transform="translate(543 250) rotate(58) scale(.8)"/>
+              </g>
+            </g>
+          </g>
+
+        <g id="person" filter="url(#grain)">
+          <image href="./image/character.png" x="80" y="120" width="480" height="480" preserveAspectRatio="xMidYMid meet"/>
+        </g>
+      </defs>
+
+      <use href="#bg"/>
+      <use href="#person"/>
+    </svg>
+  </div>
+  <div class="ground"></div>
+</header>
+
+<main id="main">
+<section id="about" class="about rise">
+  <h2>About</h2>
+  <div class="about-grid">
+    <svg class="portrait" viewBox="110 90 420 510" role="img" aria-label="Illustrated portrait of Xu Hui"><rect x="110" y="90" width="420" height="510" fill="#EAE4D3"/><use href="#bg"/><use href="#person"/></svg>
+    <p>I’m Xu Hui, a graphic designer who loves calm layouts, bold ideas and a little playfulness. I design posters, websites and game visuals in Illustrator, Photoshop and Figma, and I can code in HTML, CSS, Python and C#, so I can build what I design. I’m looking for a design role where I can do both.</p>
+  </div>
+</section>
+
+<section id="projects" class="rise">
+  <h2>Projects</h2>
+  <div class="tabs" role="group" aria-label="Filter projects"></div>
+  <div class="grid"></div>
+</section>
+<dialog id="dlg" aria-label="Project details"></dialog>
+
+<section class="tagline" aria-label="Tagline">
+  <p id="tagline">Calm layouts, warm colour and ideas that stay with people long after they scroll away.</p>
+</section>
+
+<section id="skills" class="rise">
+  <h2>Skills</h2>
+  <div class="chips"><b>Design</b><span class="chip">Adobe Illustrator</span><span class="chip">Adobe Photoshop</span><span class="chip">Figma</span><span class="chip">Poster design</span></div>
+  <div class="chips"><b>Build</b><span class="chip">Python</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Wix</span><span class="chip">Unity</span><span class="chip">C#</span></div>
+  <div class="chips"><b>Additional Skills</b><span class="chip">Blender</span><span class="chip">Photography</span><span class="chip">Videography</span><span class="chip">CapCut</span></div>
+</section>
+
+<section id="process" class="rise">
+  <h2>Process</h2>
+  <ol class="steps">
+    <li><span>1</span><h3>Listen</h3><p>I start with the goal, the audience and the place where the design will be seen.</p></li>
+    <li><span>2</span><h3>Sketch</h3><p>Rough ideas and colour studies come early, so changes stay small and quick.</p></li>
+    <li><span>3</span><h3>Deliver</h3><p>Final files are made ready for print and screen, with the source files included.</p></li>
+  </ol>
+</section>
+
+<section id="experience" class="rise">
+  <h2>Experience</h2>
+  <ol class="tl">
+    <li>
+      <time>Apr 2026 – Jul 2026</time>
+      <h3>Junior Graphic Designer, Pure Medisciences (M) Sdn Bhd</h3>
+      <p>Designed marketing posters, video thumbnails, brochures, and custom social media cover images for digital content branding.</p>
+    </li>
+    <li>
+      <time>Mar 2025 – Sep 2025</time>
+      <h3>Multimedia Graphic Designer Intern, Raffles American School</h3>
+      <p>Produced promotional event posters, captured photography, and edited videography content while generating social media graphics.</p>
+    </li>
+    <li>
+      <time>Aug 2022 – Sep 2022</time>
+      <h3>Tutor, Wisdom Mutiara Mas</h3>
+      <p>Guided students in effective study strategies, homework completion, and targeted exam preparation.</p>
+    </li>
+    <li>
+      <time>Jul 2021 – Sep 2021</time>
+      <h3>Designer's Assistant, IT Specialist</h3>
+      <p>Created digital marketing materials and optimized visual design assets based on user feedback.</p>
+    </li>
+    <li>
+      <time>Oct 2021 – Dec 2025</time>
+      <h3>B.Sc. in Mathematics Computer Graphics, Universiti Malaysia Sabah</h3>
+      <p>Graduated with 3.43 CGPA. Recipient of the Asian Youth Innovation Gold Award (Youth) and developed a 2D/3D Chinese Calligraphy Bezier curve modeling system.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="contact" class="contact rise">
+  <h2>Contact</h2>
+  <a class="mail" href="mailto:jqi3101@gmail.com">jqi3101@gmail.com</a>
+  
+  <div class="links">
+    <a href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://www.behance.net/YOUR-PROFILE" target="_blank" rel="noopener noreferrer">Behance</a>
+    <a href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="./files/Pang Jia Qi - ATS Resume.pdf" download="Xu_Hui_CV.pdf">Download CV</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Xu Hui. Designed with heart & code.</p>
+</footer>
+
+<script>
+/* ============ A. YOUR PROJECTS LIST ============ */
+const projects = [
+  {
+    t: 'Mathematical Game Design',
+    type: 'Game',
+    d: 'Based on Year 5 syllabus, this interactive educational game was designed and developed using Unity and C#.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/EZFirgi.png',
+    gallery: [
+      { src: './Jobimages/ForntPage/EZFirgi.png', d: 'Main Title Screen featuring EZ Firgi math adventure.' },
+      { src: './Jobimages/Math_Unity_Game/MainMenu.png', d: 'Interactive Main Menu showing play options and settings.' },
+      { src: './Jobimages/Math_Unity_Game/MathWorld.png', d: 'World Map Selection screen categorized by topics.' },
+      { src: './Jobimages/Math_Unity_Game/Achievement.png', d: 'Achievement tracking screen to motivate students.' },
+      { src: './Jobimages/Math_Unity_Game/AddWorld.png', d: 'Addition stage environment layout.' },
+      { src: './Jobimages/Math_Unity_Game/AddQuestions.png', d: 'Interactive arithmetic quiz gameplay interface.' },
+      { src: './Jobimages/Math_Unity_Game/Lose.png', d: 'Game over popup with retry and review prompts.' },
+      { src: './Jobimages/Math_Unity_Game/Pause.png', d: 'In-game pause overlay for audio & exit controls.' }
+    ]
+  },
+  {
+    t: 'Education Game Design',
+    type: 'Game',
+    d: 'Interactive educational game designed and developed using Unity and C#.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/EducationGame.png',
+    gallery: [
+      { src: './main/education.png', d: 'Overview of educational learning modules and shape recognition interface.' },
+      { src: './Jobimages/3D-UnityGame/2.png', d: 'Color the related shapes using the specific color and insert the correct answer to the question.' },
+      { src: './Jobimages/3D-UnityGame/4.png', d: 'Color the correct shapes using the defined color.' },
+      { src: './Jobimages/3D-UnityGame/8.png', d: 'Enhance memory of the shapes by reading out the name of the shapes.' },
+      { src: './Jobimages/3D-UnityGame/5.png', d: 'Level explanation and instructions for the player to follow.' }
+    ]
+  },
+  {
+    t: '3D Game Design',
+    type: 'Game',
+    d: '3D game environment, character models, and gameplay mechanics developed in Unity.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/3DGame.png',
+    gallery: [
+      { src: './main/3DGame.png', d: '3D atmospheric title screen and main start menu.' },
+      { src: './Jobimages/UnityAssignmentProject/3D-1.png', d: 'Player need to collect the specific flowers to win the game in defined time limit.' },
+      { src: './Jobimages/UnityAssignmentProject/3D-2.png', d: 'Player HP will drop when colliding with an enemy. If HP reaches zero or time expires, the player loses.' }
+    ]
+  },
+  {
+    t: 'Period Tracking Application',
+    type: 'APP',
+    d: 'User experience and mobile application interface design for a female health and period tracking app.',
+    tools: 'Figma',
+    img: './Jobimages/ForntPage/PeriodApp.png',
+    gallery: [
+      { src: './main/FigmaPeriod.png', d: 'App splash screen featuring the minimalist Girl.F logo and branding tagline.' },
+      { src: './Jobimages/PeriodApp/Device-1.png', d: 'Onboarding screen introducing personalized period tracking and health activity suggestions.' },
+      { src: './Jobimages/PeriodApp/Device-2.png', d: 'Onboarding screen highlighting cycle phase notifications and wellness reminders.' },
+      { src: './Jobimages/PeriodApp/Device-3.png', d: 'Onboarding screen detailing consultation features with female health specialists.' },
+      { src: './Jobimages/PeriodApp/Device-4.png', d: 'User registration screen supporting email sign-up and social media authorization.' },
+      { src: './Jobimages/PeriodApp/Device-5.png', d: 'User login screen with secure authentication options.' },
+      { src: './Jobimages/PeriodApp/Device-6.png', d: 'Home Dashboard displaying period day countdown, pregnancy probability percentage, mood logging, and health articles.' },
+      { src: './Jobimages/PeriodApp/Device-7.png', d: 'Home Dashboard in Ovulation Mode with dynamic color themes indicating high fertility windows.' },
+      { src: './Jobimages/PeriodApp/Device-8.png', d: 'Notification Center providing quick alerts for ovulation, period start dates, and daily wellness suggestions.' },
+      { src: './Jobimages/PeriodApp/Device-9.png', d: 'Chart & Calendar View featuring pregnancy prediction trends and color-coded cycle tracking.' },
+      { src: './Jobimages/PeriodApp/Device-10.png', d: 'Cycle Length History screen providing multi-month duration analysis alongside the interactive calendar.' },
+      { src: './Jobimages/PeriodApp/Device-11.png', d: 'User Profile screen featuring personal details, custom header illustrations, and lifestyle gallery highlights.' },
+      { src: './Jobimages/PeriodApp/Device-12.png', d: 'Telemedicine Specialist Directory connecting users directly with obstetricians, gynecologists, and health experts.' },
+      { src: './Jobimages/PeriodApp/Device-13.png', d: 'In-app Telemedicine Chat Interface for direct real-time Q&A consultations with medical professionals.' }
+    ]
+  },
+  {
+    t: 'Assignment Website Design',
+    type: 'Web',
+    d: 'Responsive portfolio website design focusing on minimalist visual layout and aesthetic structure.',
+    tools: 'Figma, Wix, HTML/CSS',
+    img: './Jobimages/ForntPage/WIX.png',
+    gallery: [
+      { src: './Jobimages/ForntPage/WIX.png', d: 'Brand logo and header concept for C.O.S. Created for a Mathematics Computer Graphics university assignment, the name represents both our product line (Coffee & Soda) and the mathematical Cosine (cos) trigonometry rule.' },
+      { src: './Jobimages/Wix/CoffeeMenu.png', d: 'Interactive Coffee Menu landing page layout showcasing handcrafted beverages.' },
+      { src: './Jobimages/Wix/SodaMenu.png', d: 'Refreshment & Soda Menu layout displaying custom drinks and visual branding.' }
+    ]
+  },
+  {
+    t: 'Previous Company',
+    type: 'Posters',
+    d: 'Collection of promotional event posters, social media banners, thumbnails, and cover artwork.',
+    tools: 'Illustrator, Photoshop, CapCut',
+    img: './Jobimages/ForntPage/Company.png',
+    gallery: [
+      { src: './Jobimages/PureMed/GoutFizz MAY Post 2.png', d: 'PureMed GoutFizz promotional social media banner designed for the May campaign.' },
+      { src: './Jobimages/PureMed/[Shopee] Lacto-Emune Bundle Thumbnail.png', d: 'E-commerce product thumbnail banner created for PureMed Lacto-Emune Shopee store.' },
+      { src: './Jobimages/PureMed/GoutFizz JUN Post  1.png', d: 'PureMed GoutFizz marketing promotional post created for the June product highlight.' },
+      { src: './Jobimages/Raffles/P9.png', d: 'Event promotional poster artwork designed for campus activities and marketing.' },
+      { src: './Jobimages/Raffles/P10.png', d: 'Event poster layout showcasing graphic design and typography alignment.' },
+      { src: './Jobimages/Raffles/capcut.png', d: 'Video editing workflow and thumbnail poster project arranged in CapCut.' }
+    ]
+  },
+  {
+    t: 'Blender 2D & 3D Animations',
+    type: 'Self Learning',
+    d: 'Full scene setup with lighting, camera, and character animation utilizing Grease Pencil for a 2D look in 3D.',
+    tools: 'Blender',
+    img: './Jobimages/ForntPage/Blender.png',
+    gallery: [
+      { src: './Jobimages/SelfLearn/Blender/ModelName1.png', d: 'Stylized 3D Vending Machine asset with custom NPR cell-shading and line art details.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName2.png', d: 'Low-poly 3D cherry fruit pair render with soft gradient lighting.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName3.png', d: 'Stylized jelly dessert 3D model with translucent material shading.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName4.png', d: 'Cute 3D black cat character sitting inside a paper box model.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName5.png', d: 'Cozy campfire night scene featuring stylized fantasy characters and flame lighting.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName6.png', d: '3D game asset render featuring a detailed magical staff with particle glow.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName7.png', d: 'Glowing magic orb prop with subsurface emission material.' },
+      { src: './Jobimages/SelfLearn/Blender/ModelName8.png', d: 'Stylized crystal sparkle FX element crafted for 3D game environment visuals.' }
+    ]
+  }
+];
+
+/* ============ B. BUILD CARDS & INTERACTION LOGIC ============ */
+const pal=[['#5B8F5B','#2F6150','#F4C46A','#E7E1CF'],['#A6C58E','#86AF73','#D9733A','#EFE7D3'],['#8FB4DE','#5E86B8','#F4C46A','#E9E6DA'],['#2F6150','#1E4A40','#F4C46A','#DCE7C6']];
+const motif=i=>{const[a,b,c,d]=pal[i%4];return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="400" fill="${d}"/><circle cx="215" cy="105" r="42" fill="${c}"/><path d="M50 400V215A75 75 0 0 1 125 140V400Z" fill="${a}"/><path d="M125 400V140A75 75 0 0 1 200 215V400Z" fill="${b}"/><circle cx="235" cy="352" r="55" fill="${a}"/><use href="#leaf" fill="${b}" transform="translate(235 300) rotate(20) scale(1.1)"/></svg>`};
+const art=(p,i)=>`<div class="art">${p.img?`<img src="${p.img}" alt="${p.t}" loading="lazy" decoding="async" onload="this.classList.add('ok')" onerror="this.outerHTML=motif(${i})">`:motif(i)}</div>`;
+
+const grid=document.querySelector('.grid'),tabs=document.querySelector('.tabs'),dlg=document.getElementById('dlg');
+
+// Render Cards to Grid
+grid.innerHTML=projects.length?projects.map((p,i)=>`<button class="card" data-i="${i}" data-type="${p.type}">${art(p,i)}<div class="card-title"><h3>${p.t}</h3></div><small>${p.type}</small></button>`).join(''):`<div class="empty">${motif(0)}<p>New projects are on the way. Check back soon.</p></div>`;
+
+// Filter Tabs with Smooth Animation
+['All',...new Set(projects.map(p=>p.type))].forEach((n,i)=>{
+  const b=document.createElement('button');b.textContent=n;b.setAttribute('aria-pressed',i==0);
+  b.onclick=()=>{
+    tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));
+    grid.querySelectorAll('.card').forEach((c, idx)=>{
+      const isMatch = n=='All'||c.dataset.type==n;
+      c.hidden = !isMatch;
+      if (isMatch) {
+        c.style.animation = `heroUp 400ms var(--ease) ${idx * 40}ms both`;
+      }
+    });
+  };
+  tabs.append(b);
+});
+
+// Open Modal with Carousel & Animated Captions
+grid.onclick = e => {
+  const c = e.target.closest('.card');
+  if (!c) return;
+  const i = +c.dataset.i, p = projects[i];
+
+  const rawGallery = (p.gallery && p.gallery.length) ? p.gallery : (p.img ? [p.img] : []);
+  const imgs = rawGallery.map(item => typeof item === 'string' ? { src: item, d: p.d } : { src: item.src, d: item.d || p.d });
+
+  let currentIndex = 0;
+
+  const dotsHTML = imgs.length > 1 
+    ? `<div class="dlg-dots">${imgs.map((_, idx) => `<button class="dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}" type="button" aria-label="Go to slide ${idx + 1}"></button>`).join('')}</div>`
+    : '';
+
+  const navButtonsHTML = imgs.length > 1
+    ? `<button class="nav-btn prev-btn" type="button" aria-label="Previous image">‹</button>
+       <button class="nav-btn next-btn" type="button" aria-label="Next image">›</button>`
+    : '';
+
+  const mainImageHTML = imgs.length ? `<img id="dlg-main-img" src="${imgs[0].src}" alt="${p.t}">` : motif(i);
+
+  dlg.innerHTML = `
+    <div class="dlg">
+      <div class="dlg-media">
+        <div class="dlg-art-frame">
+          ${mainImageHTML}
+          ${navButtonsHTML}
+        </div>
+        ${dotsHTML}
+      </div>
+      <div class="dlg-txt">
+        <h3>${p.t}</h3>
+        <p id="dlg-desc">${imgs[0] ? imgs[0].d : p.d}</p>
+        <p class="dlg-tools"><strong>Tools:</strong> ${p.tools}</p>
+        ${p.link ? `<a class="btn" href="${p.link}" target="_blank" rel="noopener noreferrer">View project</a>` : ''}
+        <button class="btn btn-close" type="button" onclick="dlg.close()">Close</button>
+      </div>
+    </div>`;
+
+  const updateSlide = (newIndex) => {
+    if (imgs.length <= 1) return;
+    currentIndex = (newIndex + imgs.length) % imgs.length;
+    const currentSlide = imgs[currentIndex];
+
+    const mainImg = dlg.querySelector('#dlg-main-img');
+    if (mainImg) {
+      mainImg.style.opacity = '0.4';
+      mainImg.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        mainImg.src = currentSlide.src;
+        mainImg.style.opacity = '1';
+        mainImg.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    const descEl = dlg.querySelector('#dlg-desc');
+    if (descEl) {
+      descEl.classList.add('fade-out');
+      setTimeout(() => {
+        descEl.textContent = currentSlide.d;
+        descEl.classList.remove('fade-out');
+      }, 150);
+    }
+
+    dlg.querySelectorAll('.dot').forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  };
+
+  const prevBtn = dlg.querySelector('.prev-btn');
+  const nextBtn = dlg.querySelector('.next-btn');
+  const dotsContainer = dlg.querySelector('.dlg-dots');
+
+  if (prevBtn) prevBtn.onclick = () => updateSlide(currentIndex - 1);
+  if (nextBtn) nextBtn.onclick = () => updateSlide(currentIndex + 1);
+
+  if (dotsContainer) {
+    dotsContainer.onclick = (event) => {
+      const dot = event.target.closest('.dot');
+      if (dot) updateSlide(+dot.dataset.idx);
+    };
+  }
+
+  dlg.showModal();
+};
+
+dlg.onclick = e => { if(e.target == dlg) dlg.close(); };
+
+/* ============ C. STAGGERED SCROLL REVEAL OBSERVER ============ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      
+      // Apply staggered entrance to children
+      const staggerItems = entry.target.querySelectorAll('.card, .steps li, .chip, .tl li');
+      staggerItems.forEach((item, index) => {
+        item.style.transitionDelay = `${index * 60}ms`;
+      });
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.rise').forEach(el => observer.observe(el));
+
+/* Tagline word reveal */
+const tagline = document.getElementById('tagline');
+if (tagline) {
+  const words = tagline.textContent.split(' ');
+  tagline.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
+  
+  const tagObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wordEls = entry.target.querySelectorAll('.w');
+        wordEls.forEach((w, i) => {
+          setTimeout(() => w.classList.add('on'), i * 80);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  
+  tagObserver.observe(tagline);
+}
+</script>
+</body>
+</html>

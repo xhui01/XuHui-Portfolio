@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<!--
+  PORTFOLIO V3: minimalist illustration style
+  Style: cream paper, flat geometric shapes (arches, circles, leaves), muted greens, one warm orange accent, light wide letter spacing.
+  File map: 1) <style> = looks  2) <body> = content + the illustration  3) <script> = projects list + small animations
+  Search for "EDIT:" to find what you will change most.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
+<!-- EDIT: tab title and share text -->
+<title>Xu Hui, Graphic designer | Portfolio 2026</title>
+<meta name="description" content="Portfolio 2026 of Xu Hui, a graphic designer who makes posters, websites and games.">
+<meta property="og:title" content="Xu Hui, Graphic designer | Portfolio 2026">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Posters, websites and games by Xu Hui, a graphic designer.">
+<!-- EDIT: after you publish, replace YOUR-USERNAME with your GitHub name so shared links show the picture (og-image.png is included) -->
+<meta property="og:image" content="https://YOUR-USERNAME.github.io/portfolio/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F4F0E6">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Xu Hui","jobTitle":"Graphic designer"}</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23F4C46A%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- One light, wide typeface for the whole site (like the letters in your reference) -->
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============ 1. TOKENS (change a value here, it changes everywhere) ============ */
+:root{
+  /* palette taken from the reference illustration */
+  --paper:#F4F0E6; --paper2:#EAE4D3; --ink:#1F3B35; --deep:#234A40; --muted:#5F6F68;
+  --green:#5B8F5B; --sage:#A6C58E; --pale:#D5E2BC; --sun:#F4C46A; --orange:#D9733A; --orange-text:#B85C25;
+  --font:'Jost',system-ui,sans-serif;
+  /* spacing steps */
+  --s2:2px; --s4:4px; --s8:8px; --s12:12px; --s16:16px; --s24:24px; --s32:32px; --s40:40px; --s48:48px; --s64:64px; --s80:80px; --s96:96px;
+  /* type scale (Tailwind steps) */
+  --sm:.875rem; --base:1rem; --lg:1.125rem; --xl:1.25rem; --x2:1.5rem; --x3:1.875rem; --x4:2.25rem; --x5:3rem; --x6:3.75rem; --x8:6rem; --x9:8rem;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+
+/* ============ 2. BASICS ============ */
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 var(--base)/1.6 var(--font)}
+/* soft paper grain over the whole page */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:40;opacity:.05;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+p{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance} /* no lonely last word */
+:focus-visible{outline:2px solid var(--deep);outline-offset:var(--s4)}
+section{padding:var(--s96) var(--s24);max-width:1100px;margin:0 auto}
+/* section titles: light, wide, small orange rule (same motif as the hero) */
+h2{font-weight:300;font-size:var(--x2);letter-spacing:.25em;text-transform:uppercase;color:var(--deep);margin-bottom:var(--s48)}
+h2::after,.title i{content:"";display:block;width:var(--s48);height:var(--s4);background:var(--orange);margin-top:var(--s16)}
+.skip{position:absolute;left:var(--s16);top:-100px;background:var(--sun);padding:var(--s8) var(--s12);border-radius:8px;z-index:60}
+.skip:focus{top:var(--s16)}
+
+/* buttons and tabs: thin outline, wide letters */
+.btn,.tabs button,.dlg button{font:600 var(--base)/1.5 var(--font);letter-spacing:.08em;padding:var(--s8) var(--s12);
+  background:transparent;color:var(--deep);border:1px solid var(--deep);border-radius:9999px;cursor:pointer;text-decoration:none;display:inline-block;
+  transition:background-color 300ms var(--ease),color 300ms var(--ease),transform 500ms var(--ease)}
+.btn:hover,.tabs button:hover,.dlg button:hover{background:var(--pale)}
+.tabs button[aria-pressed=true]{background:var(--deep);color:var(--paper)}
+.tabs button{font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase} /* smaller buttons: 14px semibold */
+.btn:active,.tabs button:active,.card:active,nav a:active{transform:scale(.98)} /* pressed state */
+
+/* Container for action buttons */
+.dlg-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start; /* Keeps buttons left-aligned */
+  margin-top: 16px;
+}
+
+/* Adjust View project button styling & width */
+.btn-project {
+  width: auto;            /* Auto-fit to text size */
+  padding: 8px 24px;      /* Standard padding matching Close button */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* IF WANT A FIXED WIDTH (e.g. 180px): */
+.btn-project {
+  width: 180px;
+  text-align: center;
+}
+
+
+/* ============ 3. NAV ============ */
+nav{position:fixed;top:var(--s16);left:50%;transform:translateX(-50%);z-index:30;display:flex;gap:var(--s4);
+  background:rgba(244,240,230,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(35,74,64,.35);border-radius:9999px;padding:var(--s4)}
+nav a{text-decoration:none;font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase;padding:var(--s4) var(--s12);border-radius:9999px;transition:background-color 300ms var(--ease)}
+nav a:hover,nav a[aria-current]{background:var(--sun)}
+/* MOBILE MENU: small bar with a toggle, opens a full height blurred panel. Links come from the nav above (see script) */
+.mbar{display:none;position:fixed;top:var(--s16);left:var(--s16);right:var(--s16);z-index:55;justify-content:space-between;align-items:center;
+  background:rgba(244,240,230,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(35,74,64,.35);border-radius:9999px;padding:var(--s4) var(--s4) var(--s4) var(--s16)}
+.brand{font-size:var(--sm);font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.menu-btn{position:relative;width:40px;height:40px;background:none;border:0;cursor:pointer;border-radius:9999px}
+.menu-btn i{position:absolute;left:12px;right:12px;height:2px;background:var(--deep);transition:transform 500ms var(--ease)}
+.menu-btn i:nth-child(1){top:14px}.menu-btn i:nth-child(2){top:24px}
+.menu-btn[aria-expanded=true] i:nth-child(1){transform:translateY(5px) rotate(45deg)}.menu-btn[aria-expanded=true] i:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+#menu{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:var(--s24);
+  background:rgba(244,240,230,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;visibility:hidden;transition:opacity 500ms var(--ease),visibility 0s linear 500ms}
+#menu.open{opacity:1;visibility:visible;transition-delay:0s}
+#menu a{font-size:var(--x3);font-weight:300;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(24px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+#menu.open a{opacity:1;transform:none;transition-delay:calc(min(var(--i)*60ms,400ms))} /* links arrive one by one, 60ms apart */
+body.noscroll{overflow:hidden}
+
+/* ============ 4. HERO (title top, name left, year right, illustration bottom centre) ============ */
+.hero{position:relative;min-height:100svh;max-width:1280px;margin:0 auto;padding:var(--s80) var(--s24) 0;
+  display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr;row-gap:var(--s16);justify-items:center;text-align:center}
+.title{grid-row:1}
+.title h1{font-weight:300;font-size:var(--x4);letter-spacing:.2em;margin-right:-.2em;text-transform:uppercase;color:var(--deep);line-height:1}
+.title i{margin:var(--s24) auto 0}
+.who{grid-row:2}.year{grid-row:3}.art-hero{grid-row:4;align-self:end;width:100%;max-width:640px}
+.name{font-weight:500;font-size:var(--x2);letter-spacing:.2em;text-transform:uppercase;color:var(--deep);line-height:1.2}
+.role{font-weight:300;font-size:var(--xl);letter-spacing:.08em;color:var(--orange-text)}
+.year{font-weight:300;font-size:var(--x3);letter-spacing:.15em;color:var(--deep)}
+.cta{margin-top:var(--s24)}
+.art-hero svg{display:block;width:100%;height:auto;max-height:70svh}
+.ground{position:absolute;left:0;right:0;bottom:0;height:var(--s2);background:var(--deep)}
+@media(min-width:640px){.title h1{font-size:var(--x6)}}
+@media(min-width:900px){
+  .hero{grid-template-columns:1fr minmax(0,640px) 1fr;grid-template-rows:auto 1fr;column-gap:var(--s24);row-gap:0;text-align:left}
+  .title{grid-column:1/-1;grid-row:1}
+  .who{grid-column:1;grid-row:2;align-self:center;justify-self:end;text-align:right;padding-bottom:var(--s96)}
+  .art-hero{grid-column:2;grid-row:2}
+  .year{grid-column:3;grid-row:2;align-self:center;justify-self:start;font-size:var(--x6);padding-bottom:var(--s96)}
+}
+@media(min-width:1024px){.title h1{font-size:var(--x8)}}
+@media(min-width:1280px){.title h1{font-size:var(--x9)}}
+/* gentle entrance and sway */
+@keyframes up{from{opacity:0;transform:translateY(24px)}}
+@keyframes sway{to{transform:rotate(5deg)}}
+.title,.who,.year{animation:up 900ms var(--ease) both}.who{animation-delay:150ms}.year{animation-delay:250ms}.art-hero{animation:up 1100ms var(--ease) 200ms both}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2s ease-in-out infinite alternate}
+
+/* ============ 5. ABOUT ============ */
+.about-grid{display:grid;gap:var(--s48);align-items:end}
+.portrait{display:block;width:100%;max-width:320px;height:auto;border-radius:9999px 9999px 0 0;overflow:hidden} /* arch frame */
+.about p{font-size:var(--lg);font-weight:300;max-width:560px;line-height:1.8}
+@media(min-width:800px){.about-grid{grid-template-columns:320px 1fr;gap:var(--s64)}.about p{font-size:var(--xl)}}
+
+/* ============ 6. PROJECTS ============ */
+.tabs{display:flex;gap:var(--s8);flex-wrap:wrap;margin-bottom:var(--s32)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:var(--s32) var(--s24)}
+.card-title {
+  min-height: 2.8em; /* Adjust to match 2 lines of text */
+}
+.card{background:none;border:0;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:transform 500ms var(--ease)}
+.art{aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:var(--paper2);transition:transform 500ms var(--ease)} /* 3/4 = portrait poster */
+.art svg,.art img{display:block;width:100%;height:100%;object-fit: cover; background:var(--paper2)} /* svg = placeholder, img = real artwork */ /* contain Prevents cropping, fits image inside without stretching */
+.art img{opacity:0;transition:opacity 500ms var(--ease)}.art img.ok{opacity:1} /* the flat sand colour of .art is the loading state */
+.card:hover .art{transform:translateY(-6px)}
+
+/* .card h3{font-weight:400;font-size:var(--lg);margin-top:var(--s12);line-height:1.4} */
+.card h3 { 
+  font-weight: 400; 
+  font-size: var(--lg); 
+  margin-top: var(--s12); 
+  line-height: 1.4; 
+  transition: color var(--duration-fast) var(--ease); /* Enables smooth color fading */
+}
+
+.card:hover h3 { 
+  color: var(--orange-text); 
+}
+
+.card small{color:var(--muted);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.empty{display:grid;gap:var(--s16);justify-items:start;max-width:232px;color:var(--muted)}.empty svg{width:100%;aspect-ratio:3/4;border-radius:16px}
+.tagline{text-align:center}
+.tagline p{max-width:680px;margin:0 auto;font-weight:300;font-size:var(--x4);line-height:1.11;color:var(--deep)}
+.tagline .w{opacity:.3;transition:opacity 500ms var(--ease)}.tagline .w.on{opacity:1} /* muted first, then each word turns full colour */
+@media(min-width:640px){.tagline p{font-size:var(--x5);line-height:1}}@media(min-width:1024px){.tagline p{font-size:var(--x6)}}
+.steps{list-style:none;padding:0;display:grid;gap:var(--s32)}
+.steps span{display:grid;place-items:center;width:var(--s48);height:var(--s48);border-radius:9999px;background:var(--sun);font-weight:500;margin-bottom:var(--s16)}
+.steps h3{font-weight:400;font-size:var(--xl);line-height:1.4}.steps p{font-weight:300;margin-top:var(--s8)}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr);gap:var(--s48)}}
+
+/* 1. Modal Dialog Container Reset */
+dialog#dlg {
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 900px;
+  width: 90vw;
+  max-height: 85vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: #fbf9f4; /* Match light background */
+}
+
+dialog::backdrop{background:rgba(31,59,53,.5)}
+
+/* 2. Side-by-Side Main Layout */
+.dlg {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-height: 85vh;
+}
+
+/* Left Media Column (Images & Thumbnails) */
+.dlg-media {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  background:var(--paper);color:var(--ink);
+  /*background-color: #ebdcb9; /* Warm background accent for image showcase */
+  overflow: hidden;
+  padding: 16px;
+  gap: 12px;
+}
+
+/* Center and Contain Main Image without Cropping */
+.dlg-art-frame {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.dlg-art-frame img {
+  max-width: 100%;
+  max-height: 55vh;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* Keeps ratio intact for both portrait and landscape */
+  border-radius: 8px;
+}
+
+/* Horizontal Thumbnail Carousel Bar at the Bottom */
+/* Media Container Box */
+.dlg-media {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ebdcb9; /* Warm theme background */
+  padding: 24px 16px 16px;
+  gap: 16px;
+  position: relative;
+}
+
+/* Rounded Content Area Container */
+.dlg-art-frame {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.dlg-art-frame img {
+  max-width: 100%;
+  max-height: 52vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+#dlg-desc {
+  text-align: justify; /* Aligns text evenly to left and right margins */
+  transition: opacity 0.2s ease-in-out;
+  line-height: 1.6;
+  min-height: 48px; /* Prevents text area from collapsing/jumping between different string lengths */
+}
+
+/* Prev / Next Arrow Overlay Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: #ffffff;
+  scale: 1.05;
+}
+
+.prev-btn {
+  left: 14px;
+}
+
+.next-btn {
+  right: 14px;
+}
+
+/* Scroll Markers (Dots Container) */
+.dlg-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+/* Individual Dot styling */
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #edd66c;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dot.active {
+  background-color: #f4e9d5;
+  transform: scale(1.15);
+}
+
+.dot:hover {
+  opacity: 0.8;
+}
+
+/* Optional: Ensure child thumbnail items don't shrink */
+.dlg-gallery > * {
+  flex: 0 0 auto;
+}
+
+.thumb {
+  border: 2px solid transparent;
+  background: none;
+  padding: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.thumb.active,
+.thumb:hover {
+  opacity: 1;
+  border-color: #d3a13d;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right Text Details Column */
+.dlg-txt {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fbf9f4;
+  color: #333;
+}
+
+.dlg-txt h3 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.dlg-txt p {
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.dlg-tools {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.btn-close {
+  margin-top: 16px;
+  align-self: flex-start;
+  padding: 8px 24px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Responsive adjustment for Mobile screens */
+@media (max-width: 680px) {
+  .dlg {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .dlg-txt {
+    padding: 20px;
+  }
+}
+
+/* ============ 7. SKILLS ============ */
+.chips{display:flex;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s32)}
+.chips b{width:100%;font-weight:500;font-size:var(--sm);letter-spacing:.2em;text-transform:uppercase;color:var(--orange-text)}
+.chip{border:1px solid var(--deep);border-radius:9999px;padding:var(--s4) var(--s16);transition:background-color 300ms var(--ease)}
+.chip:hover{background:var(--pale)}
+
+/* ============ 8. EXPERIENCE ============ */
+.tl{list-style:none;padding:0;border-left:1px solid var(--deep);margin-left:var(--s8)}
+.tl li{position:relative;padding:0 0 var(--s40) var(--s32)}
+.tl li::before{content:"";position:absolute;left:-8px;top:var(--s8);width:16px;height:16px;border-radius:50%;background:var(--sun)}
+.tl h3{font-weight:400;font-size:var(--xl);line-height:1.4}
+.tl time{color:var(--orange-text);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.tl p{max-width:640px;margin-top:var(--s4);font-weight:300}
+
+/* ============ 9. CONTACT + FOOTER ============ */
+.contact{text-align:center}
+.contact h2::after{margin-left:auto;margin-right:auto}
+.mail{font-weight:300;font-size:var(--x3);letter-spacing:.04em;text-decoration:none;border-bottom:var(--s4) solid var(--orange);transition:background-color 300ms var(--ease)}
+.mail:hover{background:var(--pale)}
+.links{margin-top:var(--s32);display:flex;gap:var(--s24);justify-content:center;flex-wrap:wrap;font-size:var(--sm);letter-spacing:.15em;text-transform:uppercase}
+.off{opacity:.4;cursor:not-allowed;pointer-events:none} /* link with no address yet */
+footer a{display:inline-block;margin-bottom:var(--s12);color:var(--deep)}
+footer{text-align:center;color:var(--muted);padding:var(--s48) var(--s24);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+@media(min-width:640px){.mail{font-size:var(--x5)}}
+
+/* ============ MODAL GALLERY STYLES ============ */
+.dlg-view { display: flex; flex-direction: column; background: var(--paper2); }
+.dlg .art { min-height: 280px; max-height: 420px; overflow: hidden; }
+.dlg-img { display: block; width: 100%; height: 100%; object-fit: contain; background: var(--paper2); }
+
+.dlg-gallery {
+  display: flex;
+  gap: var(--s8);
+  padding: var(--s12);
+  overflow-x: auto;
+  background: rgba(35,74,64,.05);
+  border-top: 1px solid rgba(35,74,64,.1);
+}
+.dlg-gallery .thumb {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: none;
+}
+.dlg-gallery .thumb.active { border-color: var(--orange); }
+.dlg-gallery .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ============ 10. SCROLL REVEAL + SMALL SCREENS + REDUCED MOTION ============ */
+.js .rise{opacity:0;transform:translateY(32px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+.js .rise.in{opacity:1;transform:none}
+@media(max-width:700px){.dlg{grid-template-columns:1fr}.dlg .art{min-height:220px}nav{display:none}.mbar{display:flex}}
+@keyframes fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.sway{animation:none!important}.title,.who,.year,.art-hero{animation:fade 700ms var(--ease) both!important}.js .rise,#menu a,.card:hover .art{transform:none!important}.tagline .w{opacity:1}}
+</style>
+
+<link rel="stylesheet" href="motion.css">
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main"><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+<div class="mbar"><span class="brand">Xu Hui</span><button class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><i></i><i></i></button></div>
+<div id="menu" aria-label="Menu"></div>
+
+<!-- HERO: layout like your reference. Title on top, name on the left, year on the right, character at the bottom -->
+<header class="hero" id="top">
+  <div class="title"><h1>Portfolio</h1><i></i></div>
+  <div class="who"><p class="name">Xu Hui</p><p class="role">Graphic designer</p><p class="cta"><a class="btn" href="#projects">See my work</a></p></div> <!-- EDIT: name and position -->
+  <p class="year">2026</p>
+  <div class="art-hero">
+    <!-- THE ILLUSTRATION (SVG). Drawn from your photo: dark hair with a centre parting, clear round glasses, a big smile, navy blazer, cream blouse.
+         "defs" holds reusable parts (grain texture, leaf, background shapes, the person). The same person is reused in the About section. -->
+    <svg viewBox="0 0 640 600" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Illustration of Xu Hui, smiling, wearing round glasses and a navy blazer">
+      <defs>
+        <!-- paper grain that sits on top of the shapes, like the reference -->
+        <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" result="n"/>
+          <feColorMatrix in="n" type="matrix" values="0 0 0 0 .1  0 0 0 0 .15  0 0 0 0 .1  0 0 0 .5 -.14" result="g"/>
+          <feComposite in="g" in2="SourceAlpha" operator="in" result="gg"/><feBlend in="SourceGraphic" in2="gg" mode="multiply"/></filter>
+        <path id="leaf" d="M0 0C14-20 14-46 0-64C-14-46-14-20 0 0Z"/>
+
+<!-- BACKGROUND SHAPES: halo, arches, circles, sun, branch -->
+        <g id="bg" filter="url(#grain)">
+          <circle cx="320" cy="285" r="172" fill="#DCE7C6"/>
+          <path d="M40 600V270A65 65 0 0 1 105 205V600Z" fill="#5B8F5B"/><path d="M105 600V205A65 65 0 0 1 170 270V600Z" fill="#2F6150"/>
+          <path d="M470 600V290A65 65 0 0 1 535 225V600Z" fill="#A6C58E"/><path d="M535 600V225A65 65 0 0 1 600 290V600Z" fill="#86AF73"/>
+          <circle cx="150" cy="600" r="92" fill="#7DA866"/><circle cx="500" cy="600" r="82" fill="#5B8F5B"/>
+          <circle cx="95" cy="470" r="46" fill="#86AF73"/><circle cx="548" cy="430" r="46" fill="#2F6150"/>
+          <circle cx="112" cy="96" r="46" fill="#F4C46A"/>
+          <!-- pale leaves on the left arch -->
+          <g class="sway">
+          <g fill="#D5E2BC"><use href="#leaf" transform="translate(98 565) rotate(-32) scale(1.2)"/><use href="#leaf" transform="translate(98 565) rotate(4) scale(1.35)"/><use href="#leaf" transform="translate(98 565) rotate(36) scale(1.15)"/></g>
+          </g>
+          <!-- branch bottom right, sways gently -->
+        <g transform="translate(-40, 320)">
+          <g class="sway">
+            <path d="M576 24C562 96 548 170 542 262" fill="none" stroke="#2F6150" stroke-width="3"/>
+            <g fill="#DCE7C6">
+              <use href="#leaf" transform="translate(574 56) rotate(-55) scale(.85)"/>
+              <use href="#leaf" transform="translate(558 138) rotate(-55) scale(.85)"/>
+              <use href="#leaf" transform="translate(547 212) rotate(-55) scale(.8)"/>
+            </g>
+            <g fill="#F4C46A">
+              <use href="#leaf" transform="translate(576 24) rotate(8) scale(.8)"/>
+              <use href="#leaf" transform="translate(567 98) rotate(58) scale(.85)"/>
+              <use href="#leaf" transform="translate(552 174) rotate(58) scale(.85)"/>
+              <use href="#leaf" transform="translate(543 250) rotate(58) scale(.8)"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- CHARACTER DEFINITION -->
+        <g id="person" filter="url(#grain)">
+          <image href="./image/character.png" x="80" y="120" width="480" height="480" preserveAspectRatio="xMidYMid meet"/>
+        </g>
+      </defs>
+
+      <use href="#bg"/>
+      <use href="#person"/>
+    </svg>
+  </div>
+  <div class="ground"></div>
+</header>
+
+<main id="main">
+<section id="about" class="about rise">
+  <h2>About</h2>
+  <div class="about-grid">
+    <!-- same illustration, cropped into an arch -->
+    <svg class="portrait" viewBox="110 90 420 510" role="img" aria-label="Illustrated portrait of Xu Hui"><rect x="110" y="90" width="420" height="510" fill="#EAE4D3"/><use href="#bg"/><use href="#person"/></svg>
+    <!-- EDIT: your intro, 2 to 3 sentences -->
+    <p>I’m Xu Hui, a graphic designer who loves calm layouts, bold ideas and a little playfulness. I design posters, websites and game visuals in Illustrator, Photoshop and Figma, and I can code in HTML, CSS, Python and C#, so I can build what I design. I’m looking for a design role where I can do both.</p>
+  </div>
+</section>
+
+<section id="projects" class="rise">
+  <h2>Projects</h2>
+  <div class="tabs" role="group" aria-label="Filter projects"></div>
+  <div class="grid"></div>
+</section>
+<dialog id="dlg" aria-label="Project details"></dialog>
+
+<!-- TAGLINE: one big statement. Words light up one by one as you scroll past -->
+<section class="tagline" aria-label="Tagline">
+  <!-- EDIT: the one sentence you want people to remember (two lines or more) -->
+  <p id="tagline">Calm layouts, warm colour and ideas that stay with people long after they scroll away.</p>
+</section>
+
+<section id="skills" class="rise">
+  <h2>Skills</h2>
+  <div class="chips"><b>Design</b><span class="chip">Adobe Illustrator</span><span class="chip">Adobe Photoshop</span><span class="chip">Figma</span><span class="chip">Poster design</span></div>
+  <div class="chips"><b>Build</b><span class="chip">Python</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Wix</span><span class="chip">Unity</span><span class="chip">C#</span></div>
+  <div class="chips"><b>Additional Skills</b><span class="chip">Blender</span><span class="chip">Photography</span><span class="chip">Videography</span><span class="chip">CapCut</span></div>
+</section>
+
+<!-- PROCESS: how you work, in three steps. EDIT the wording -->
+<section id="process" class="rise">
+  <h2>Process</h2>
+  <ol class="steps">
+    <li><span>1</span><h3>Listen</h3><p>I start with the goal, the audience and the place where the design will be seen.</p></li>
+    <li><span>2</span><h3>Sketch</h3><p>Rough ideas and colour studies come early, so changes stay small and quick.</p></li>
+    <li><span>3</span><h3>Deliver</h3><p>Final files are made ready for print and screen, with the source files included.</p></li>
+  </ol>
+</section>
+
+<!-- EXPERIENCE: Newest first -->
+<section id="experience" class="rise">
+  <h2>Experience</h2>
+  <ol class="tl">
+    <li>
+      <time>Apr 2026 – Jul 2026</time>
+      <h3>Junior Graphic Designer, Pure Medisciences (M) Sdn Bhd</h3>
+      <p>Designed marketing posters, video thumbnails, brochures, and custom social media cover images for digital content branding.</p>
+    </li>
+    <li>
+      <time>Mar 2025 – Sep 2025</time>
+      <h3>Multimedia Graphic Designer Intern, Raffles American School</h3>
+      <p>Produced promotional event posters, captured photography, and edited videography content while generating social media graphics.</p>
+    </li>
+    <li>
+      <time>Aug 2022 – Sep 2022</time>
+      <h3>Tutor, Wisdom Mutiara Mas</h3>
+      <p>Guided students in effective study strategies, homework completion, and targeted exam preparation.</p>
+    </li>
+    <li>
+      <time>Jul 2021 – Sep 2021</time>
+      <h3>Designer's Assistant, IT Specialist</h3>
+      <p>Created digital marketing materials and optimized visual design assets based on user feedback.</p>
+    </li>
+    <li>
+      <time>Oct 2021 – Dec 2025</time>
+      <h3>B.Sc. in Mathematics Computer Graphics, Universiti Malaysia Sabah</h3>
+      <p>Graduated with 3.43 CGPA. Recipient of the Asian Youth Innovation Gold Award (Youth) and developed a 2D/3D Chinese Calligraphy Bezier curve modeling system.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="contact" class="contact rise">
+  <h2>Contact</h2>
+  <a class="mail" href="mailto:jqi3101@gmail.com">jqi3101@gmail.com</a>
+  
+  <div class="links">
+    <!-- Active Social Links -->
+    <a href="https://www.linkedin.com/in/xu-hui-littlesloth/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/xhui01?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub</a>
+    
+    <!-- Active CV Download Link -->
+    <a href="./files/Pang Jia Qi - ATS Resume.pdf" download="Xu_Hui_CV.pdf">Download CV</a>
+  </div>
+</section>
+
+<script>
+/* ============ A. YOUR PROJECTS LIST ============ */
+const projects = [
+    {
+    t: 'Mathematical Game Design',
+    type: 'Game',
+    d: 'Based on Year 5 syllabus, this interactive educational game was designed and developed using Unity and C#.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/EZFirgi.png',
+    gallery: [
+      { src: './Jobimages/ForntPage/EZFirgi.png', d: 'Main Title Screen featuring EZ Firgi math adventure.' },
+      { src: './Jobimages/Math_Unity_Game/MainMenu.png', d: 'Interactive Main Menu showing play options and settings.' },
+      { src: './Jobimages/Math_Unity_Game/MathWorld.png', d: 'World Map Selection screen categorized by topics.' },
+      { src: './Jobimages/Math_Unity_Game/Achievement.png', d: 'Achievement tracking screen to motivate students.' },
+      { src: './Jobimages/Math_Unity_Game/AddWorld.png', d: 'Addition stage environment layout.' },
+      { src: './Jobimages/Math_Unity_Game/AddQuestions.png', d: 'Interactive arithmetic quiz gameplay interface.' },
+      { src: './Jobimages/Math_Unity_Game/Lose.png', d: 'Game over popup with retry and review prompts.' },
+      { src: './Jobimages/Math_Unity_Game/Pause.png', d: 'In-game pause overlay for audio & exit controls.' }
+    ]
+  },
+  {
+    t: 'Education Game Design',
+    type: 'Game',
+    d: 'Interactive educational game designed and developed using Unity and C#.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/EducationGame.png',
+    gallery: [
+      './main/education.png',
+      { src: './Jobimages/3D-UnityGame/2.png',d: 'Color the related shapes using the specific color and insert the correct answer to the question.' },
+      { src:'./Jobimages/3D-UnityGame/4.png',d:'Color the correct shapes using the defined color.'},
+      { src:'./Jobimages/3D-UnityGame/8.png',d:'Enhance memory of the shapes by reading out the name of the shapes.'},
+      { src:'./Jobimages/3D-UnityGame/5.png',d:'Level explaination and instructions for the player to follow.'}
+    ]
+  },
+  {
+    t: '3D Game Design',
+    type: 'Game',
+    d: '3D game environment, character models, and gameplay mechanics developed in Unity.',
+    tools: 'Unity, C#',
+    img: './Jobimages/ForntPage/3DGame.png',
+    gallery: [
+      './main/3DGame.png',
+      { src: './Jobimages/UnityAssignmentProject/3D-1.png', d: 'Player need to collect the specific flowers to win the game in defiened time limit.' },
+      { src: './Jobimages/UnityAssignmentProject/3D-2.png', d: 'Player HP will drop when collapse with an enemy. If HP reaches zero or player did not collect all items in the time limit, the player loses.' }
+    ]
+  },
+{
+    t: 'Period Tracking Application',
+    type: 'APP',
+    d: 'User experience and mobile application interface design for a female health and period tracking app.',
+    tools: 'Figma',
+    img: './Jobimages/ForntPage/PeriodApp.png',
+    gallery: [
+      {
+        src: './main/FigmaPeriod.png',
+        d: 'App splash screen featuring the minimalist Girl.F logo and branding tagline.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-1.png',
+        d: 'Onboarding screen introducing personalized period tracking and health activity suggestions.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-2.png',
+        d: 'Onboarding screen highlighting cycle phase notifications and wellness reminders.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-3.png',
+        d: 'Onboarding screen detailing consultation features with female health specialists.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-4.png',
+        d: 'User registration screen supporting email sign-up and social media authorization.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-5.png',
+        d: 'User login screen with secure authentication options.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-6.png',
+        d: 'Home Dashboard displaying period day countdown, pregnancy probability percentage, mood logging, and health articles.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-7.png',
+        d: 'Home Dashboard in Ovulation Mode with dynamic color themes indicating high fertility windows.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-8.png',
+        d: 'Notification Center providing quick alerts for ovulation, period start dates, and daily wellness suggestions.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-9.png',
+        d: 'Chart & Calendar View featuring pregnancy prediction trends and color-coded cycle tracking.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-10.png',
+        d: 'Cycle Length History screen providing multi-month duration analysis alongside the interactive calendar.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-11.png',
+        d: 'User Profile screen featuring personal details, custom header illustrations, and lifestyle gallery highlights.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-12.png',
+        d: 'Telemedicine Specialist Directory connecting users directly with obstetricians, gynecologists, and health experts.'
+      },
+      {
+        src: './Jobimages/PeriodApp/Device-13.png',
+        d: 'In-app Telemedicine Chat Interface for direct real-time Q&A consultations with medical professionals.'
+      }
+    ]
+  },
+  {
+    t: 'Assignment Website Design',
+    type: 'Web',
+    d: 'Responsive portfolio website design focusing on minimalist visual layout and aesthetic structure.',
+    tools: 'Figma, Wix, HTML/CSS',
+    img: './Jobimages/ForntPage/WIX.png',
+    gallery: [
+      {
+        src: './Jobimages/ForntPage/WIX.png',
+        d: 'Brand logo and header concept for C.O.S. As a Mathematics Computer Graphics student, the name represents both our product line (Coffee & Soda) and the mathematical Cosine (cos) trigonometry rule. View live site by clicking the view project button.',
+        link: 'https://pangjiabs21.wixsite.com/coffeeorsoda'
+      },
+      {
+        src: './Jobimages/Wix/CoffeeMenu.png',
+        d: 'Interactive Coffee Menu landing page layout showcasing handcrafted beverages.'
+      },
+      {
+        src: './Jobimages/Wix/SodaMenu.png',
+        d: 'Refreshment & Soda Menu layout displaying custom drinks and visual branding.'
+      }
+    ]
+  },
+  {
+    t: 'Previous Company',
+    type: 'Posters',
+    d: 'Collection of promotional event posters, social media banners, thumbnails, and cover artwork.',
+    tools: 'Illustrator, Photoshop, CapCut',
+    img: './Jobimages/ForntPage/Company.png',
+    gallery: [
+      {
+        src: './Jobimages/PureMed/GoutFizz MAY Post 2.png',
+        d: 'PureMed GoutFizz promotional social media banner designed for the May campaign.'
+      },
+      {
+        src: './Jobimages/PureMed/[Shopee] Lacto-Emune Bundle Thumbnail.png',
+        d: 'E-commerce product thumbnail banner created for PureMed Lacto-Emune Shopee store.'
+      },
+      {
+        src: './Jobimages/PureMed/GoutFizz JUN Post  1.png',
+        d: 'PureMed GoutFizz marketing promotional post created for the June product highlight.'
+      },
+      {
+        src: './Jobimages/Raffles/P9.png',
+        d: 'Event promotional poster artwork designed for campus activities and marketing.'
+      },
+      {
+        src: './Jobimages/Raffles/P10.png',
+        d: 'Event poster layout showcasing graphic design and typography alignment.'
+      },
+      {
+        src: './Jobimages/Raffles/capcut.png',
+        d: 'Video editing workflow and thumbnail poster project arranged in CapCut.'
+      }
+    ]
+  },
+  {
+    t: 'Blender 2D & 3D Animations',
+    type: 'Self Learning',
+    d: 'Full scene setup with lighting, camera, and character animation utilizing Grease Pencil for a 2D look in 3D.',
+    tools: 'Blender',
+    img: './Jobimages/ForntPage/Blender.png',
+    gallery: [
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName1.png',
+        d: 'Stylized 3D Vending Machine asset with custom NPR cell-shading and line art details.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName2.png',
+        d: 'Low-poly 3D cherry fruit pair render with soft gradient lighting.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName3.png',
+        d: 'Stylized jelly dessert 3D model with translucent material shading.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName4.png',
+        d: 'Cute 3D black cat character sitting inside a paper box model.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName5.png',
+        d: 'Cozy campfire night scene featuring stylized fantasy characters and flame lighting.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName6.png',
+        d: '3D product render featuring a detailed surface and the water molecule.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName7.png',
+        d: 'Glowing magic orb prop with subsurface emission material.'
+      },
+      {
+        src: './Jobimages/SelfLearn/Blender/ModelName8.png',
+        d: 'Stylized crystal sparkle FX element crafted for 3D game environment visuals.'
+      }
+    ]
+  }
+];
+
+/* ============ B. BUILD CARDS & MODAL GALLERY ============ */
+const pal=[['#5B8F5B','#2F6150','#F4C46A','#E7E1CF'],['#A6C58E','#86AF73','#D9733A','#EFE7D3'],['#8FB4DE','#5E86B8','#F4C46A','#E9E6DA'],['#2F6150','#1E4A40','#F4C46A','#DCE7C6']];
+const motif=i=>{const[a,b,c,d]=pal[i%4];return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="400" fill="${d}"/><circle cx="215" cy="105" r="42" fill="${c}"/><path d="M50 400V215A75 75 0 0 1 125 140V400Z" fill="${a}"/><path d="M125 400V140A75 75 0 0 1 200 215V400Z" fill="${b}"/><circle cx="235" cy="352" r="55" fill="${a}"/><use href="#leaf" fill="${b}" transform="translate(235 300) rotate(20) scale(1.1)"/></svg>`};
+const art=(p,i)=>`<div class="art">${p.img?`<img src="${p.img}" alt="${p.t}" loading="lazy" decoding="async" onload="this.classList.add('ok')" onerror="this.outerHTML=motif(${i})">`:motif(i)}</div>`;
+
+const grid=document.querySelector('.grid'),tabs=document.querySelector('.tabs'),dlg=document.getElementById('dlg');
+
+// 1. Render Cards to Grid
+grid.innerHTML=projects.length?projects.map((p,i)=>`<button class="card" data-i="${i}" data-type="${p.type}">${art(p,i)}<h3>${p.t}</h3><small>${p.type}</small></button>`).join(''):`<div class="empty">${motif(0)}<p>New projects are on the way. Check back soon.</p></div>`;
+
+// 2. Render Filter Tabs
+['All',...new Set(projects.map(p=>p.type))].forEach((n,i)=>{
+  const b=document.createElement('button');b.textContent=n;b.setAttribute('aria-pressed',i==0);
+  b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));
+    grid.querySelectorAll('.card').forEach(c=>c.hidden=!(n=='All'||c.dataset.type==n))};
+  tabs.append(b);
+});
+
+// 3. Open Modal with Gallery
+grid.onclick = e => {
+  const c = e.target.closest('.card');
+  if (!c) return;
+  const i = +c.dataset.i, p = projects[i];
+
+  // // 1. Normalize gallery items so every element is an object { src, d }
+  // const rawGallery = (p.gallery && p.gallery.length) ? p.gallery : (p.img ? [p.img] : []);
+  // const imgs = rawGallery.map(item => {
+  //   if (typeof item === 'string') {
+  //     return { src: item, d: p.d }; // Fallback to main project description
+  //   }
+  //   return { src: item.src, d: item.d || p.d };
+  // });
+
+  // let currentIndex = 0;
+
+  // // Build Dots Navigation HTML
+  // const dotsHTML = imgs.length > 1 
+  //   ? `<div class="dlg-dots">
+  //        ${imgs.map((_, idx) => `
+  //          <button class="dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}" type="button" aria-label="Go to slide ${idx + 1}"></button>
+  //        `).join('')}
+  //      </div>`
+  //   : '';
+
+  // // Build Prev / Next Arrow HTML
+  // const navButtonsHTML = imgs.length > 1
+  //   ? `<button class="nav-btn prev-btn" type="button" aria-label="Previous image">‹</button>
+  //      <button class="nav-btn next-btn" type="button" aria-label="Next image">›</button>`
+  //   : '';
+
+  // const mainImageHTML = imgs.length 
+  //   ? `<img id="dlg-main-img" src="${imgs[0].src}" alt="${p.t}">` 
+  //   : motif(i);
+
+  // dlg.innerHTML = `
+  //   <div class="dlg">
+  //     <div class="dlg-media">
+  //       <!-- Content Area Wrapper -->
+  //       <div class="dlg-art-frame">
+  //         ${mainImageHTML}
+  //         ${navButtonsHTML}
+  //       </div>
+  //       <!-- Scroll Markers (Dots) -->
+  //       ${dotsHTML}
+  //     </div>
+  //     <div class="dlg-txt">
+  //       <h3>${p.t}</h3>
+  //       <!-- Dynamic Description Text -->
+  //       <p id="dlg-desc">${imgs[0] ? imgs[0].d : p.d}</p>
+  //       <p class="dlg-tools"><strong>Tools:</strong> ${p.tools}</p>
+  //       ${p.link ? `<a class="btn" href="${p.link}" target="_blank" rel="noopener noreferrer">View project</a>` : ''}
+  //       <button class="btn btn-close" type="button" onclick="dlg.close()">Close</button>
+  //     </div>
+  //   </div>`;
+
+  // // Function to update displayed image, description, and active dot with ease-in-out transition
+  // const updateSlide = (newIndex) => {
+  //   if (imgs.length <= 1) return;
+  //   currentIndex = (newIndex + imgs.length) % imgs.length;
+
+  //   const currentSlide = imgs[currentIndex];
+  //   const mainImg = dlg.querySelector('#dlg-main-img');
+  //   const descEl = dlg.querySelector('#dlg-desc');
+
+  //   // 1. Fade out current image and description text
+  //   if (mainImg) mainImg.style.opacity = '0';
+  //   if (descEl) descEl.style.opacity = '0';
+
+  //   // 2. Wait 150ms for fade out, swap content, then fade back in
+  //   setTimeout(() => {
+  //     if (mainImg) {
+  //       mainImg.src = currentSlide.src;
+  //       mainImg.style.opacity = '1';
+  //     }
+  //     if (descEl) {
+  //       descEl.textContent = currentSlide.d;
+  //       descEl.style.opacity = '1';
+  //     }
+  //   }, 150);
+
+  //   // 3. Update active dot indicator
+  //   dlg.querySelectorAll('.dot').forEach((dot, idx) => {
+  //     dot.classList.toggle('active', idx === currentIndex);
+  //   });
+  // };
+
+  // 1. Normalize gallery items so each element preserves its own slide link if present
+  const rawGallery = (p.gallery && p.gallery.length) ? p.gallery : (p.img ? [p.img] : []);
+  const imgs = rawGallery.map(item => {
+    if (typeof item === 'string') {
+      return { src: item, d: p.d, link: null };
+    }
+    return { src: item.src, d: item.d || p.d, link: item.link || null };
+  });
+
+  let currentIndex = 0;
+
+  // Build Dots & Arrows
+  const dotsHTML = imgs.length > 1 
+    ? `<div class="dlg-dots">${imgs.map((_, idx) => `<button class="dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}" type="button"></button>`).join('')}</div>`
+    : '';
+
+  const navButtonsHTML = imgs.length > 1
+    ? `<button class="nav-btn prev-btn" type="button">‹</button>
+       <button class="nav-btn next-btn" type="button">›</button>`
+    : '';
+
+  const mainImageHTML = imgs.length 
+    ? `<img id="dlg-main-img" src="${imgs[0].src}" alt="${p.t}">` 
+    : motif(i);
+
+  // Initial link state for slide 0
+  const initialLinkHTML = imgs[0].link 
+    ? `<a id="dlg-link-btn" class="btn btn-project" href="${imgs[0].link}" target="_blank" rel="noopener noreferrer">View project</a>`
+    : `<a id="dlg-link-btn" class="btn btn-project" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">View project</a>`;
+
+  dlg.innerHTML = `
+    <div class="dlg">
+      <div class="dlg-media">
+        <div class="dlg-art-frame">
+          ${mainImageHTML}
+          ${navButtonsHTML}
+        </div>
+        ${dotsHTML}
+      </div>
+      <div class="dlg-txt">
+        <h3>${p.t}</h3>
+        <p id="dlg-desc">${imgs[0] ? imgs[0].d : p.d}</p>
+        <p class="dlg-tools"><strong>Tools:</strong> ${p.tools}</p>
+        <div class="dlg-actions">
+          ${initialLinkHTML}
+          <button class="btn btn-close" type="button" onclick="dlg.close()">Close</button>
+        </div>
+      </div>
+    </div>`;
+
+  // Function to update slide, text, and button visibility dynamically
+  const updateSlide = (newIndex) => {
+    if (imgs.length <= 1) return;
+    currentIndex = (newIndex + imgs.length) % imgs.length;
+
+    const currentSlide = imgs[currentIndex];
+    const mainImg = dlg.querySelector('#dlg-main-img');
+    const descEl = dlg.querySelector('#dlg-desc');
+    const linkBtn = dlg.querySelector('#dlg-link-btn');
+
+    if (mainImg) mainImg.style.opacity = '0';
+    if (descEl) descEl.style.opacity = '0';
+
+    setTimeout(() => {
+      if (mainImg) {
+        mainImg.src = currentSlide.src;
+        mainImg.style.opacity = '1';
+      }
+      if (descEl) {
+        descEl.textContent = currentSlide.d;
+        descEl.style.opacity = '1';
+      }
+      // Toggle button visibility based on whether current slide has a link
+      if (linkBtn) {
+        if (currentSlide.link) {
+          linkBtn.href = currentSlide.link;
+          linkBtn.style.display = 'inline-block';
+        } else {
+          linkBtn.style.display = 'none';
+        }
+      }
+    }, 150);
+
+    dlg.querySelectorAll('.dot').forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  };
+
+  // Event Listeners for Nav Arrows & Dots
+  const prevBtn = dlg.querySelector('.prev-btn');
+  const nextBtn = dlg.querySelector('.next-btn');
+  const dotsContainer = dlg.querySelector('.dlg-dots');
+
+  if (prevBtn) prevBtn.onclick = () => updateSlide(currentIndex - 1);
+  if (nextBtn) nextBtn.onclick = () => updateSlide(currentIndex + 1);
+
+  if (dotsContainer) {
+    dotsContainer.onclick = (event) => {
+      const dot = event.target.closest('.dot');
+      if (dot) {
+        updateSlide(+dot.dataset.idx);
+      }
+    };
+  }
+
+  dlg.showModal();
+};
+dlg.onclick = e => { if(e.target == dlg) dlg.close(); };
+
+/* ============ C. SCROLL REVEAL + NAV HIGHLIGHT ============ */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rise').forEach(el=>io.observe(el));
+const links=[...document.querySelectorAll('nav a')];
+const now=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.toggleAttribute('aria-current',a.hash=='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+links.forEach(a=>{const s=document.querySelector(a.hash);if(s)now.observe(s)});
+
+/* ============ D. MOBILE MENU ============ */
+const menu=document.getElementById('menu'),mb=document.querySelector('.menu-btn');
+menu.innerHTML=links.map((a,i)=>`<a href="${a.hash}" style="--i:${i}">${a.textContent}</a>`).join('');
+const toggle=open=>{menu.classList.toggle('open',open);document.body.classList.toggle('noscroll',open);mb.setAttribute('aria-expanded',open);mb.setAttribute('aria-label',open?'Close menu':'Open menu')};
+mb.onclick=()=>toggle(!menu.classList.contains('open'));
+menu.onclick=e=>{if(e.target.closest('a'))toggle(false)};
+document.addEventListener('keydown',e=>{if(e.key=='Escape')toggle(false)});
+
+/* ============ E. TAGLINE ANIMATION ============ */
+const tg=document.getElementById('tagline');
+tg.innerHTML=tg.textContent.split(' ').map(w=>`<span class="w">${w} </span>`).join('');
+const wio=new IntersectionObserver(es=>es.filter(e=>e.isIntersecting).forEach((e,k)=>{e.target.style.transitionDelay=k*70+'ms';e.target.classList.add('on');wio.unobserve(e.target)}),{rootMargin:'0px 0px -35% 0px'});
+tg.querySelectorAll('.w').forEach(w=>wio.observe(w));
+
+</script>
+
+<script src="motion.js"></script>
+
+</body>
+</html>

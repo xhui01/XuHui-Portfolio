@@ -1,0 +1,98 @@
+/* ==========================================================================
+   MOTION LAYER v2: "TUMBLE" (the Canva style). Every element drops in a little above its place, spins,
+   swings past the end point once or twice and settles. Based on the rules of elayadesign/ai-design-skills:
+   one easing curve, only transform and opacity move, 60ms between items (capped at 400ms), reveals play once,
+   pressed = scale(.98), reduced motion = plain fade.
+   Add AFTER your own <style>:  <link rel="stylesheet" href="motion.css">
+   ========================================================================== */
+
+/* THE TUMBLE. Each element sets its own strength with 3 variables:
+   --dy = how far above it starts   --r = how far it is turned at the start   --s = how small it starts
+   The middle steps swing the opposite way (overshoot) and then settle. Change the numbers to make it wilder or calmer. */
+@keyframes m-tumble{
+  0%  {opacity:0;transform:translateY(var(--dy,-48px)) rotate(var(--r,-14deg)) scale(var(--s,.7))}
+  55% {opacity:1;transform:translateY(calc(var(--dy,-48px)*-.12)) rotate(calc(var(--r,-14deg)*-.35)) scale(1.03)}
+  78% {transform:translateY(calc(var(--dy,-48px)*.04)) rotate(calc(var(--r,-14deg)*.12)) scale(.995)}
+  100%{opacity:1;transform:none}
+}
+@keyframes m-fadeout{to{opacity:0}}
+@keyframes m-fade{from{opacity:0}}
+@keyframes m-draw{from{transform:scaleX(0)}}
+@keyframes m-dlg-out{to{opacity:0;transform:translateY(32px) rotate(3deg) scale(.9)}} /* pop up tumbles away */
+section[id]{scroll-margin-top:var(--s80,80px)}
+
+/* ---- 1. HERO ---- */
+.motion .title{animation:none}
+.motion .title h1 span{display:inline-block;animation:m-tumble 900ms var(--ease) backwards;animation-delay:calc(var(--k)*40ms);--dy:-56px;--r:-16deg;--s:.6} /* each letter tumbles, 40ms apart */
+.motion .title h1 span:nth-child(even){--r:16deg}                                /* every second letter spins the other way */
+.motion .title i{transform-origin:center;animation:m-draw 700ms var(--ease) 500ms both}
+.motion .who{animation:m-tumble 900ms var(--ease) 150ms backwards;--dy:-32px;--r:-4deg;--s:.9}
+.motion .year{animation:m-tumble 900ms var(--ease) 250ms backwards;--dy:-32px;--r:6deg;--s:.8}
+.motion .art-hero{transform-origin:50% 100%;animation:m-tumble 1100ms var(--ease) 200ms backwards;--dy:-48px;--r:-3deg;--s:.92}
+
+/* ---- 2. SECTIONS: heading, tabs, chips, steps, timeline, portrait, text, contact all tumble in once ---- */
+.motion .rise:not(.in) :is(.steps>li,.tl>li,.chip,.tabs button,.portrait,.about p,.mail,.links a),
+.motion .rise:not(.in) h2{opacity:0}
+.motion .rise.in :is(.steps>li,.tl>li,.chip,.tabs button,.portrait,.about p,.mail,.links a){
+  animation:m-tumble 700ms var(--ease) backwards;animation-delay:calc(min(var(--k,0)*60ms,400ms) + 150ms);--dy:-32px;--r:-8deg;--s:.85}
+.motion .rise.in :is(.steps>li,.tl>li,.chip,.tabs button,.links a):nth-child(even){--r:8deg}  /* alternate the spin direction */
+.motion .rise.in h2{animation:m-tumble 700ms var(--ease) backwards;transform-origin:left bottom;--dy:-24px;--r:-5deg;--s:.9}
+.motion .contact.in h2{transform-origin:center bottom}
+.motion .rise h2::after{transform:scaleX(0);transform-origin:left;transition:transform 700ms var(--ease) 200ms}
+.motion .rise.in h2::after{transform:scaleX(1)}
+.motion .contact h2::after{transform-origin:center}
+
+/* ---- 3. PROJECT CARDS: tumble in when they scroll into view and again after you change tab ---- */
+.motion .card:not(.pop){opacity:0}
+.motion .card.pop{animation:m-tumble 700ms var(--ease) backwards;animation-delay:calc(min(var(--k,0)*60ms,400ms));--dy:-40px;--r:-6deg;--s:.88}
+.motion .card.pop:nth-child(even){--r:6deg}
+.art svg,.art img{transition:transform 500ms var(--ease)}
+.art img{transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.card:hover .art img,.card:hover .art svg{transform:scale(1.05)}
+.card h3{transition:color 300ms var(--ease)}
+.card:hover h3{color:var(--orange-text)}
+
+/* ---- 4. BUTTONS ---- */
+.btn:hover{transform:translateY(-2px)}
+.btn:active,.tabs button:active,.card:active,nav a:active{transform:scale(.98)}
+.links a,.mail{transition:color 300ms var(--ease),background-color 300ms var(--ease)}
+
+/* ---- 5. SCROLL PROGRESS BAR ---- */
+.progress{position:fixed;top:0;left:0;right:0;height:var(--s4,4px);background:var(--orange);transform-origin:left;transform:scaleX(var(--p,0));z-index:70;pointer-events:none}
+
+/* ---- 6. PROJECT POP UP: tumbles in, tumbles out ---- */
+dialog#dlg[open]{animation:m-tumble 700ms var(--ease);--dy:-48px;--r:-3deg;--s:.9}
+dialog#dlg[open]::backdrop{animation:m-fade 300ms var(--ease)}
+dialog#dlg.closing{animation:m-dlg-out 300ms var(--ease) forwards}
+dialog#dlg.closing::backdrop{animation:m-fadeout 300ms var(--ease) forwards}
+.nav-btn{transition:background-color 300ms var(--ease),border-color 300ms var(--ease),scale 500ms var(--ease)}
+.nav-btn:active{scale:.95}
+.dot{transition:background-color 300ms var(--ease),transform 500ms var(--ease)}
+.thumb{transition:opacity 300ms var(--ease),border-color 300ms var(--ease)}
+
+/* ---- REDUCED MOTION: the tumble becomes a plain fade (no movement, no spin) ---- */
+@media(prefers-reduced-motion:reduce){
+  @keyframes m-tumble{from{opacity:0}}
+  @keyframes m-dlg-out{to{opacity:0}}
+  .motion .title h1 span{animation-delay:0s}
+  .motion .rise h2::after{transform:none;transition:none}
+  .card:hover .art img,.card:hover .art svg,.btn:hover{transform:none}
+}
+
+/* Invert entrance direction when scrolling from bottom to top */
+.motion .pop, .motion .rise.in {
+  --dy-dir: calc(var(--dy, -40px) * var(--scroll-dir, 1));
+}
+
+@keyframes m-tumble-bidirectional {
+  0%   { opacity: 0; transform: translateY(var(--dy-dir, -48px)) rotate(var(--r, -14deg)) scale(var(--s, .7)); }
+  55%  { opacity: 1; transform: translateY(calc(var(--dy-dir, -48px) * -.12)) rotate(calc(var(--r, -14deg) * -.35)) scale(1.03); }
+  78%  { transform: translateY(calc(var(--dy-dir, -48px) * .04)) rotate(calc(var(--r, -14deg) * .12)) scale(.995); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* Apply bidirectional keyframes to cards */
+.motion .card.pop {
+  animation: m-tumble-bidirectional 700ms var(--ease) backwards;
+  animation-delay: calc(min(var(--k, 0) * 60ms, 400ms));
+}

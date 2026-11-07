@@ -1,0 +1,39 @@
+<!-- BACKGROUND SHAPES: halo, arches, circles, sun, branch -->
+        <g id="bg" filter="url(#grain)">
+          <circle cx="320" cy="285" r="172" fill="#DCE7C6"/>
+          <path d="M40 600V270A65 65 0 0 1 105 205V600Z" fill="#5B8F5B"/><path d="M105 600V205A65 65 0 0 1 170 270V600Z" fill="#2F6150"/>
+          <path d="M470 600V290A65 65 0 0 1 535 225V600Z" fill="#A6C58E"/><path d="M535 600V225A65 65 0 0 1 600 290V600Z" fill="#86AF73"/>
+          <circle cx="150" cy="600" r="92" fill="#7DA866"/><circle cx="500" cy="600" r="82" fill="#5B8F5B"/>
+          <circle cx="95" cy="470" r="46" fill="#86AF73"/><circle cx="548" cy="430" r="46" fill="#2F6150"/>
+          <circle cx="112" cy="96" r="46" fill="#F4C46A"/>
+          <!-- pale leaves on the left arch -->
+          <g fill="#D5E2BC"><use href="#leaf" transform="translate(98 565) rotate(-32) scale(1.2)"/><use href="#leaf" transform="translate(98 565) rotate(4) scale(1.35)"/><use href="#leaf" transform="translate(98 565) rotate(36) scale(1.15)"/></g>
+          <!-- branch top right, sways gently -->
+          <g class="sway"><path d="M576 24C562 96 548 170 542 262" fill="none" stroke="#2F6150" stroke-width="3"/>
+            <g fill="#2F6150"><use href="#leaf" transform="translate(574 56) rotate(-55) scale(.85)"/><use href="#leaf" transform="translate(558 138) rotate(-55) scale(.85)"/><use href="#leaf" transform="translate(547 212) rotate(-55) scale(.8)"/></g>
+            <g fill="#86AF73"><use href="#leaf" transform="translate(576 24) rotate(8) scale(.8)"/><use href="#leaf" transform="translate(567 98) rotate(58) scale(.85)"/><use href="#leaf" transform="translate(552 174) rotate(58) scale(.85)"/><use href="#leaf" transform="translate(543 250) rotate(58) scale(.8)"/></g></g>
+        </g>
+
+        <!-- THE PERSON (centre x = 320) -->
+        <g id="person" filter="url(#grain)" transform="translate(20 0)">
+          <path d="M182 300C160 160 240 112 300 112C360 112 440 160 418 300Z" fill="#2A2327"/> <!-- back hair -->
+          <path d="M266 395V462H238Q300 540 362 462H334V395Z" fill="#EDAE84"/> <!-- neck -->
+          <path d="M238 462Q300 540 362 462L392 600H208Z" fill="#F7EADB"/> <!-- blouse -->
+          <path d="M60 600C70 520 150 490 238 462L296 600Z" fill="#2F4B78"/><path d="M540 600C530 520 450 490 362 462L304 600Z" fill="#233A63"/> <!-- blazer -->
+          <path d="M238 462L272 522L250 542L222 484Z" fill="#3A5A8C"/><path d="M362 462L328 522L350 542L378 484Z" fill="#2B4673"/> <!-- lapels -->
+          <path d="M266 395H334V432Q300 462 266 432Z" fill="#D98F69" opacity=".55"/> <!-- shadow under chin -->
+          <ellipse cx="202" cy="305" rx="14" ry="24" fill="#F0B88F"/><ellipse cx="398" cy="305" rx="14" ry="24" fill="#E5A97F"/> <!-- ears -->
+          <path d="M200 290C200 205 250 175 300 175C350 175 400 205 400 290C400 360 350 425 300 425C250 425 200 360 200 290Z" fill="#F6CBA3"/> <!-- face -->
+          <path d="M300 175C350 175 400 205 400 290C400 360 350 425 300 425Z" fill="#EDAE84" opacity=".45"/> <!-- shaded half of the face -->
+          <circle cx="238" cy="352" r="18" fill="#F29B86" opacity=".35"/><circle cx="362" cy="352" r="18" fill="#F29B86" opacity=".35"/> <!-- cheeks -->
+          <path d="M188 300C168 180 232 138 300 138C368 138 432 180 412 300C408 262 398 232 378 214C352 192 322 182 300 178C278 182 248 192 222 214C202 232 192 262 188 300Z" fill="#2A2327"/> <!-- hair with centre parting -->
+          <path d="M214 210C236 170 270 150 300 148C268 160 246 184 232 230Z" fill="#433A40"/>
+          <path d="M226 262Q254 248 284 260M316 260Q346 248 374 262" fill="none" stroke="#2A2327" stroke-width="5" stroke-linecap="round"/> <!-- eyebrows -->
+          <ellipse cx="258" cy="310" rx="8" ry="6" fill="#2B2328"/><ellipse cx="342" cy="310" rx="8" ry="6" fill="#2B2328"/><circle cx="261" cy="308" r="2" fill="#fff"/><circle cx="345" cy="308" r="2" fill="#fff"/> <!-- eyes -->
+          <!-- clear round glasses -->
+          <g fill="#fff" fill-opacity=".14" stroke="#B4CADB" stroke-width="3.5"><circle cx="258" cy="308" r="37"/><circle cx="342" cy="308" r="37"/></g>
+          <g fill="none" stroke="#8FA9BF" stroke-width="1" stroke-linecap="round"><circle cx="258" cy="308" r="38.8"/><circle cx="342" cy="308" r="38.8"/><path d="M295 304Q300 298 305 304M221 300L202 296M379 300L398 296"/></g>
+          <path d="M302 322Q299 332 297 337" fill="none" stroke="#E9A57E" stroke-width="2.5" stroke-linecap="round"/><path d="M296 338Q300 346 306 338" fill="none" stroke="#C97E58" stroke-width="3" stroke-linecap="round"/> <!-- nose -->
+          <path d="M268 364Q300 382 332 364Q324 396 300 398Q276 396 268 364Z" fill="#E58E7E"/><path d="M277 369Q300 380 323 369Q318 387 300 389Q282 387 277 369Z" fill="#FFF8F0"/> <!-- smile -->
+          <path d="M268 364Q300 378 332 364M264 358Q260 366 266 372M336 358Q340 366 334 372" fill="none" stroke="#C5655A" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
