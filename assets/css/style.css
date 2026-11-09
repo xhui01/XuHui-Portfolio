@@ -1,0 +1,455 @@
+/* ============ 1. TOKENS (change a value here, it changes everywhere) ============ */
+:root{
+  /* palette taken from the reference illustration */
+  --paper:#F4F0E6; --paper2:#EAE4D3; --ink:#1F3B35; --deep:#234A40; --muted:#5F6F68;
+  --green:#5B8F5B; --sage:#A6C58E; --pale:#D5E2BC; --sun:#F4C46A; --orange:#D9733A; --orange-text:#B85C25;
+  --font:'Jost',system-ui,sans-serif;
+  /* spacing steps */
+  --s2:2px; --s4:4px; --s8:8px; --s12:12px; --s16:16px; --s24:24px; --s32:32px; --s40:40px; --s48:48px; --s64:64px; --s80:80px; --s96:96px;
+  /* type scale (Tailwind steps) */
+  --sm:.875rem; --base:1rem; --lg:1.125rem; --xl:1.25rem; --x2:1.5rem; --x3:1.875rem; --x4:2.25rem; --x5:3rem; --x6:3.75rem; --x8:6rem; --x9:8rem;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+
+/* ============ 2. BASICS ============ */
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 var(--base)/1.6 var(--font)}
+/* soft paper grain over the whole page */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:40;opacity:.05;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+p{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance} /* no lonely last word */
+:focus-visible{outline:2px solid var(--deep);outline-offset:var(--s4)}
+section{padding:var(--s96) var(--s24);max-width:1100px;margin:0 auto}
+/* section titles: light, wide, small orange rule (same motif as the hero) */
+h2{font-weight:300;font-size:var(--x2);letter-spacing:.25em;text-transform:uppercase;color:var(--deep);margin-bottom:var(--s48)}
+h2::after,.title i{content:"";display:block;width:var(--s48);height:var(--s4);background:var(--orange);margin-top:var(--s16)}
+.skip{position:absolute;left:var(--s16);top:-100px;background:var(--sun);padding:var(--s8) var(--s12);border-radius:8px;z-index:60}
+.skip:focus{top:var(--s16)}
+
+/* buttons and tabs: thin outline, wide letters */
+.btn,.tabs button,.dlg button{font:600 var(--base)/1.5 var(--font);letter-spacing:.08em;padding:var(--s8) var(--s12);
+  background:transparent;color:var(--deep);border:1px solid var(--deep);border-radius:9999px;cursor:pointer;text-decoration:none;display:inline-block;
+  transition:background-color 300ms var(--ease),color 300ms var(--ease),transform 500ms var(--ease)}
+.btn:hover,.tabs button:hover,.dlg button:hover{background:var(--pale)}
+.tabs button[aria-pressed=true]{background:var(--deep);color:var(--paper)}
+.tabs button{font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase} /* smaller buttons: 14px semibold */
+.btn:active,.tabs button:active,.card:active,nav a:active{transform:scale(.98)} /* pressed state */
+
+/* Container for action buttons */
+.dlg-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start; /* Keeps buttons left-aligned */
+  margin-top: 16px;
+}
+
+/* Adjust View project button styling & width */
+.btn-project {
+  width: auto;            /* Auto-fit to text size */
+  padding: 8px 24px;      /* Standard padding matching Close button */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* IF WANT A FIXED WIDTH (e.g. 180px): */
+.btn-project {
+  width: 180px;
+  text-align: center;
+}
+
+
+/* ============ 3. NAV ============ */
+nav{position:fixed;top:var(--s16);left:50%;transform:translateX(-50%);z-index:30;display:flex;gap:var(--s4);
+  background:rgba(244,240,230,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(35,74,64,.35);border-radius:9999px;padding:var(--s4)}
+nav a{text-decoration:none;font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase;padding:var(--s4) var(--s12);border-radius:9999px;transition:background-color 300ms var(--ease)}
+nav a:hover,nav a[aria-current]{background:var(--sun)}
+/* MOBILE MENU: small bar with a toggle, opens a full height blurred panel. Links come from the nav above (see script) */
+.mbar{display:none;position:fixed;top:var(--s16);left:var(--s16);right:var(--s16);z-index:55;justify-content:space-between;align-items:center;
+  background:rgba(244,240,230,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(35,74,64,.35);border-radius:9999px;padding:var(--s4) var(--s4) var(--s4) var(--s16)}
+.brand{font-size:var(--sm);font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.menu-btn{position:relative;width:40px;height:40px;background:none;border:0;cursor:pointer;border-radius:9999px}
+.menu-btn i{position:absolute;left:12px;right:12px;height:2px;background:var(--deep);transition:transform 500ms var(--ease)}
+.menu-btn i:nth-child(1){top:14px}.menu-btn i:nth-child(2){top:24px}
+.menu-btn[aria-expanded=true] i:nth-child(1){transform:translateY(5px) rotate(45deg)}.menu-btn[aria-expanded=true] i:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+#menu{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:var(--s24);
+  background:rgba(244,240,230,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);opacity:0;visibility:hidden;transition:opacity 500ms var(--ease),visibility 0s linear 500ms}
+#menu.open{opacity:1;visibility:visible;transition-delay:0s}
+#menu a{font-size:var(--x3);font-weight:300;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(24px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+#menu.open a{opacity:1;transform:none;transition-delay:calc(min(var(--i)*60ms,400ms))} /* links arrive one by one, 60ms apart */
+body.noscroll{overflow:hidden}
+
+/* ============ 4. HERO (title top, name left, year right, illustration bottom centre) ============ */
+.hero{position:relative;min-height:100svh;max-width:1280px;margin:0 auto;padding:var(--s80) var(--s24) 0;
+  display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr;row-gap:var(--s16);justify-items:center;text-align:center}
+.title{grid-row:1}
+.title h1{font-weight:300;font-size:var(--x4);letter-spacing:.2em;margin-right:-.2em;text-transform:uppercase;color:var(--deep);line-height:1}
+.title i{margin:var(--s24) auto 0}
+.who{grid-row:2}.year{grid-row:3}.art-hero{grid-row:4;align-self:end;width:100%;max-width:640px}
+.name{font-weight:500;font-size:var(--x2);letter-spacing:.2em;text-transform:uppercase;color:var(--deep);line-height:1.2}
+.role{font-weight:300;font-size:var(--xl);letter-spacing:.08em;color:var(--orange-text)}
+.year{font-weight:300;font-size:var(--x3);letter-spacing:.15em;color:var(--deep)}
+.cta{margin-top:var(--s24)}
+.art-hero svg{display:block;width:100%;height:auto;max-height:70svh}
+.ground{position:absolute;left:0;right:0;bottom:0;height:var(--s2);background:var(--deep)}
+@media(min-width:640px){.title h1{font-size:var(--x6)}}
+@media(min-width:900px){
+  .hero{grid-template-columns:1fr minmax(0,640px) 1fr;grid-template-rows:auto 1fr;column-gap:var(--s24);row-gap:0;text-align:left}
+  .title{grid-column:1/-1;grid-row:1}
+  .who{grid-column:1;grid-row:2;align-self:center;justify-self:end;text-align:right;padding-bottom:var(--s96)}
+  .art-hero{grid-column:2;grid-row:2}
+  .year{grid-column:3;grid-row:2;align-self:center;justify-self:start;font-size:var(--x6);padding-bottom:var(--s96)}
+}
+@media(min-width:1024px){.title h1{font-size:var(--x8)}}
+@media(min-width:1280px){.title h1{font-size:var(--x9)}}
+/* gentle entrance and sway */
+@keyframes up{from{opacity:0;transform:translateY(24px)}}
+@keyframes sway{to{transform:rotate(5deg)}}
+.title,.who,.year{animation:up 900ms var(--ease) both}.who{animation-delay:150ms}.year{animation-delay:250ms}.art-hero{animation:up 1100ms var(--ease) 200ms both}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2s ease-in-out infinite alternate}
+
+/* ============ 5. ABOUT ============ */
+.about-grid{display:grid;gap:var(--s48);align-items:end}
+.portrait{display:block;width:100%;max-width:320px;height:auto;border-radius:9999px 9999px 0 0;overflow:hidden} /* arch frame */
+.about p{font-size:var(--lg);font-weight:300;max-width:560px;line-height:1.8}
+@media(min-width:800px){.about-grid{grid-template-columns:320px 1fr;gap:var(--s64)}.about p{font-size:var(--xl)}}
+
+/* ============ 6. PROJECTS ============ */
+.tabs{display:flex;gap:var(--s8);flex-wrap:wrap;margin-bottom:var(--s32)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:var(--s32) var(--s24)}
+.card-title {
+  min-height: 2.8em; /* Adjust to match 2 lines of text */
+}
+.card{background:none;border:0;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:transform 500ms var(--ease)}
+.art{aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:var(--paper2);transition:transform 500ms var(--ease)} /* 3/4 = portrait poster */
+.art svg,.art img{display:block;width:100%;height:100%;object-fit: cover; background:var(--paper2)} /* svg = placeholder, img = real artwork */ /* contain Prevents cropping, fits image inside without stretching */
+.art img{opacity:0;transition:opacity 500ms var(--ease)}.art img.ok{opacity:1} /* the flat sand colour of .art is the loading state */
+.card:hover .art{transform:translateY(-6px)}
+
+/* .card h3{font-weight:400;font-size:var(--lg);margin-top:var(--s12);line-height:1.4} */
+.card h3 { 
+  font-weight: 400; 
+  font-size: var(--lg); 
+  margin-top: var(--s12); 
+  line-height: 1.4; 
+  transition: color var(--duration-fast) var(--ease); /* Enables smooth color fading */
+}
+
+.card:hover h3 { 
+  color: var(--orange-text); 
+}
+
+.card small{color:var(--muted);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.empty{display:grid;gap:var(--s16);justify-items:start;max-width:232px;color:var(--muted)}.empty svg{width:100%;aspect-ratio:3/4;border-radius:16px}
+.tagline{text-align:center}
+.tagline p{max-width:680px;margin:0 auto;font-weight:300;font-size:var(--x4);line-height:1.11;color:var(--deep)}
+.tagline .w{opacity:.3;transition:opacity 500ms var(--ease)}.tagline .w.on{opacity:1} /* muted first, then each word turns full colour */
+@media(min-width:640px){.tagline p{font-size:var(--x5);line-height:1}}@media(min-width:1024px){.tagline p{font-size:var(--x6)}}
+.steps{list-style:none;padding:0;display:grid;gap:var(--s32)}
+.steps span{display:grid;place-items:center;width:var(--s48);height:var(--s48);border-radius:9999px;background:var(--sun);font-weight:500;margin-bottom:var(--s16)}
+.steps h3{font-weight:400;font-size:var(--xl);line-height:1.4}.steps p{font-weight:300;margin-top:var(--s8)}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr);gap:var(--s48)}}
+
+/* 1. Modal Dialog Container Reset */
+dialog#dlg {
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 900px;
+  width: 90vw;
+  max-height: 85vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: #fbf9f4; /* Match light background */
+}
+
+dialog::backdrop{background:rgba(31,59,53,.5)}
+
+/* 2. Side-by-Side Main Layout */
+.dlg {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-height: 85vh;
+}
+
+/* Left Media Column (Images & Thumbnails) */
+.dlg-media {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  background:var(--paper);color:var(--ink);
+  /*background-color: #ebdcb9; /* Warm background accent for image showcase */
+  overflow: hidden;
+  padding: 16px;
+  gap: 12px;
+}
+
+/* Center and Contain Main Image without Cropping */
+.dlg-art-frame {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.dlg-art-frame img {
+  max-width: 100%;
+  max-height: 55vh;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* Keeps ratio intact for both portrait and landscape */
+  border-radius: 8px;
+}
+
+/* Horizontal Thumbnail Carousel Bar at the Bottom */
+/* Media Container Box */
+.dlg-media {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ebdcb9; /* Warm theme background */
+  padding: 24px 16px 16px;
+  gap: 16px;
+  position: relative;
+}
+
+/* Rounded Content Area Container */
+.dlg-art-frame {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.dlg-art-frame img {
+  max-width: 100%;
+  max-height: 52vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+#dlg-desc {
+  text-align: justify; /* Aligns text evenly to left and right margins */
+  transition: opacity 0.2s ease-in-out;
+  line-height: 1.6;
+  min-height: 48px; /* Prevents text area from collapsing/jumping between different string lengths */
+}
+
+/* Prev / Next Arrow Overlay Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: #ffffff;
+  scale: 1.05;
+}
+
+.prev-btn {
+  left: 14px;
+}
+
+.next-btn {
+  right: 14px;
+}
+
+/* Scroll Markers (Dots Container) */
+.dlg-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+/* Individual Dot styling */
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #edd66c;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dot.active {
+  background-color: #f4e9d5;
+  transform: scale(1.15);
+}
+
+.dot:hover {
+  opacity: 0.8;
+}
+
+/* Optional: Ensure child thumbnail items don't shrink */
+.dlg-gallery > * {
+  flex: 0 0 auto;
+}
+
+.thumb {
+  border: 2px solid transparent;
+  background: none;
+  padding: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.thumb.active,
+.thumb:hover {
+  opacity: 1;
+  border-color: #d3a13d;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right Text Details Column */
+.dlg-txt {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fbf9f4;
+  color: #333;
+}
+
+.dlg-txt h3 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.dlg-txt p {
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.dlg-tools {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.btn-close {
+  margin-top: 16px;
+  align-self: flex-start;
+  padding: 8px 24px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Responsive adjustment for Mobile screens */
+@media (max-width: 680px) {
+  .dlg {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .dlg-txt {
+    padding: 20px;
+  }
+}
+
+/* ============ 7. SKILLS ============ */
+.chips{display:flex;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s32)}
+.chips b{width:100%;font-weight:500;font-size:var(--sm);letter-spacing:.2em;text-transform:uppercase;color:var(--orange-text)}
+.chip{border:1px solid var(--deep);border-radius:9999px;padding:var(--s4) var(--s16);transition:background-color 300ms var(--ease)}
+.chip:hover{background:var(--pale)}
+
+/* ============ 8. EXPERIENCE ============ */
+.tl{list-style:none;padding:0;border-left:1px solid var(--deep);margin-left:var(--s8)}
+.tl li{position:relative;padding:0 0 var(--s40) var(--s32)}
+.tl li::before{content:"";position:absolute;left:-8px;top:var(--s8);width:16px;height:16px;border-radius:50%;background:var(--sun)}
+.tl h3{font-weight:400;font-size:var(--xl);line-height:1.4}
+.tl time{color:var(--orange-text);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+.tl p{max-width:640px;margin-top:var(--s4);font-weight:300}
+
+/* ============ 9. CONTACT + FOOTER ============ */
+.contact{text-align:center}
+.contact h2::after{margin-left:auto;margin-right:auto}
+.mail{font-weight:300;font-size:var(--x3);letter-spacing:.04em;text-decoration:none;border-bottom:var(--s4) solid var(--orange);transition:background-color 300ms var(--ease)}
+.mail:hover{background:var(--pale)}
+.links{margin-top:var(--s32);display:flex;gap:var(--s24);justify-content:center;flex-wrap:wrap;font-size:var(--sm);letter-spacing:.15em;text-transform:uppercase}
+.off{opacity:.4;cursor:not-allowed;pointer-events:none} /* link with no address yet */
+footer a{display:inline-block;margin-bottom:var(--s12);color:var(--deep)}
+footer{text-align:center;color:var(--muted);padding:var(--s48) var(--s24);font-size:var(--sm);letter-spacing:.12em;text-transform:uppercase}
+@media(min-width:640px){.mail{font-size:var(--x5)}}
+
+/* ============ MODAL GALLERY STYLES ============ */
+.dlg-view { display: flex; flex-direction: column; background: var(--paper2); }
+.dlg .art { min-height: 280px; max-height: 420px; overflow: hidden; }
+.dlg-img { display: block; width: 100%; height: 100%; object-fit: contain; background: var(--paper2); }
+
+.dlg-gallery {
+  display: flex;
+  gap: var(--s8);
+  padding: var(--s12);
+  overflow-x: auto;
+  background: rgba(35,74,64,.05);
+  border-top: 1px solid rgba(35,74,64,.1);
+}
+.dlg-gallery .thumb {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: none;
+}
+.dlg-gallery .thumb.active { border-color: var(--orange); }
+.dlg-gallery .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ============ 10. SCROLL REVEAL + SMALL SCREENS + REDUCED MOTION ============ */
+.js .rise{opacity:0;transform:translateY(32px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+.js .rise.in{opacity:1;transform:none}
+@media(max-width:700px){.dlg{grid-template-columns:1fr}.dlg .art{min-height:220px}nav{display:none}.mbar{display:flex}}
+@keyframes fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.sway{animation:none!important}.title,.who,.year,.art-hero{animation:fade 700ms var(--ease) both!important}.js .rise,#menu a,.card:hover .art{transform:none!important}.tagline .w{opacity:1}}

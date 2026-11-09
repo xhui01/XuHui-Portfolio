@@ -1,7 +1,7 @@
 /* ==========================================================================
    MOTION LAYER v2: "TUMBLE" (the Canva style). Every element drops in a little above its place, spins,
    swings past the end point once or twice and settles. Based on the rules of elayadesign/ai-design-skills:
-   one easing curve, only transform and opacity move, 60ms between items (capped at 400ms), reveals play once,
+   one easing curve, only transform and opacity move, 60ms between items (capped at 400ms), reveals replay each time you scroll back to them (set REPLAY=false in motion.js for once only),
    pressed = scale(.98), reduced motion = plain fade.
    Add AFTER your own <style>:  <link rel="stylesheet" href="motion.css">
    ========================================================================== */
@@ -29,6 +29,9 @@ section[id]{scroll-margin-top:var(--s80,80px)}
 .motion .who{animation:m-tumble 900ms var(--ease) 150ms backwards;--dy:-32px;--r:-4deg;--s:.9}
 .motion .year{animation:m-tumble 900ms var(--ease) 250ms backwards;--dy:-32px;--r:6deg;--s:.8}
 .motion .art-hero{transform-origin:50% 100%;animation:m-tumble 1100ms var(--ease) 200ms backwards;--dy:-48px;--r:-3deg;--s:.92}
+
+/* the hero resets (animation off) when it is out of view, so the entrance plays again when you scroll back to the top */
+.hero-reset .title h1 span,.hero-reset .title i,.hero-reset .who,.hero-reset .year,.hero-reset .art-hero{animation:none}
 
 /* ---- 2. SECTIONS: heading, tabs, chips, steps, timeline, portrait, text, contact all tumble in once ---- */
 .motion .rise:not(.in) :is(.steps>li,.tl>li,.chip,.tabs button,.portrait,.about p,.mail,.links a),
@@ -70,6 +73,12 @@ dialog#dlg.closing::backdrop{animation:m-fadeout 300ms var(--ease) forwards}
 .dot{transition:background-color 300ms var(--ease),transform 500ms var(--ease)}
 .thumb{transition:opacity 300ms var(--ease),border-color 300ms var(--ease)}
 
+/* Smooth ease-in-out transitions for modal image and description */
+#dlg-main-img, #dlg-desc {
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
 /* ---- REDUCED MOTION: the tumble becomes a plain fade (no movement, no spin) ---- */
 @media(prefers-reduced-motion:reduce){
   @keyframes m-tumble{from{opacity:0}}
@@ -77,22 +86,4 @@ dialog#dlg.closing::backdrop{animation:m-fadeout 300ms var(--ease) forwards}
   .motion .title h1 span{animation-delay:0s}
   .motion .rise h2::after{transform:none;transition:none}
   .card:hover .art img,.card:hover .art svg,.btn:hover{transform:none}
-}
-
-/* Invert entrance direction when scrolling from bottom to top */
-.motion .pop, .motion .rise.in {
-  --dy-dir: calc(var(--dy, -40px) * var(--scroll-dir, 1));
-}
-
-@keyframes m-tumble-bidirectional {
-  0%   { opacity: 0; transform: translateY(var(--dy-dir, -48px)) rotate(var(--r, -14deg)) scale(var(--s, .7)); }
-  55%  { opacity: 1; transform: translateY(calc(var(--dy-dir, -48px) * -.12)) rotate(calc(var(--r, -14deg) * -.35)) scale(1.03); }
-  78%  { transform: translateY(calc(var(--dy-dir, -48px) * .04)) rotate(calc(var(--r, -14deg) * .12)) scale(.995); }
-  100% { opacity: 1; transform: none; }
-}
-
-/* Apply bidirectional keyframes to cards */
-.motion .card.pop {
-  animation: m-tumble-bidirectional 700ms var(--ease) backwards;
-  animation-delay: calc(min(var(--k, 0) * 60ms, 400ms));
 }

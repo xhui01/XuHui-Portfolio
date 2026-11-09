@@ -7,6 +7,9 @@
 const root=document.documentElement; root.classList.add('motion');
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const EASE='cubic-bezier(0.22,1,0.36,1)';
+/* REPLAY = true  : every element tumbles in each time it comes back on screen, scrolling down OR up.
+   REPLAY = false : each element tumbles only the first time (the skill's default). */
+const REPLAY=true;
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 
 /* TUMBLE for script-driven moments (tab click, slide change). Same shape as @keyframes m-tumble in motion.css:
@@ -26,52 +29,31 @@ if(h1){const t=h1.textContent.trim();h1.setAttribute('aria-label',t);
 /* 2. Number the items in skills, process and experience so CSS can stagger them (60ms apart, capped at 400ms) */
 $$('.steps,.tl,.chips,.tabs,.links').forEach(g=>[...g.children].filter(x=>x.tagName!='B').forEach((c,k)=>c.style.setProperty('--k',k)));
 
-/* 3. PROJECT CARDS: reveal once when they enter the screen, again after a tab change */
-/* 3. PROJECT CARDS & REVEAL SECTIONS (Bidirectional: Scroll Down & Scroll Up) */
-let lastScrollY = window.scrollY;
+/* 3. PROJECT CARDS: tumble in when they enter the screen. With REPLAY they reset once fully off screen, so they tumble again from either direction */
+const cio=new IntersectionObserver(es=>{
+  es.filter(e=>e.intersectionRatio>=.1&&!e.target.classList.contains('pop')).forEach((e,k)=>{e.target.style.setProperty('--k',k);e.target.classList.add('pop')});
+  if(REPLAY)es.filter(e=>!e.isIntersecting).forEach(e=>e.target.classList.remove('pop'));
+},{threshold:[0,.1],rootMargin:'0px 0px -5% 0px'});
+$$('.card').forEach(c=>cio.observe(c));
+$('.tabs')?.addEventListener('click',e=>{ const tb=e.target.closest('button');if(!tb)return;tumble(tb,{dy:-14,r:-8,s:.88}); // the tab you press tumbles
+  requestAnimationFrame(()=>$$('.card').forEach(c=>{c.classList.remove('pop');cio.unobserve(c);cio.observe(c)}))}); // runs after your own filter code
 
-const cio = new IntersectionObserver((entries) => {
-  const isScrollingUp = window.scrollY < lastScrollY;
-  lastScrollY = window.scrollY;
+/* 3b. SECTIONS (skills, process, experience, projects...): add "in" when 10% is visible, remove it when fully off screen so the tumble can replay */
+const rio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.intersectionRatio>=.1)e.target.classList.add('in');
+  else if(REPLAY&&!e.isIntersecting)e.target.classList.remove('in')}),{threshold:[0,.1]});
+$$('.rise').forEach(el=>rio.observe(el));
 
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      // Set direction variable so CSS/JS knows if user scrolled up or down
-      entry.target.style.setProperty('--scroll-dir', isScrollingUp ? '-1' : '1');
-      
-      // Add 'pop' or 'in' class to trigger animation when entering screen
-      entry.target.classList.add('pop', 'in');
-    } else {
-      // Reset state when element leaves the screen (allows re-animating when scrolling back)
-      entry.target.classList.remove('pop', 'in');
-    }
-  });
-}, {
-  threshold: 0.15,
-  rootMargin: '0px 0px -5% 0px'
-});
+/* 3c. TAGLINE WORDS: light up going down, dim again going up (words above the screen stay lit) */
+const wio2=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting)e.target.classList.add('on');
+  else if(e.boundingClientRect.top<0)e.target.classList.add('on');          // already scrolled past (even if you jumped): stay lit
+  else if(REPLAY)e.target.classList.remove('on')}),{rootMargin:'0px 0px -35% 0px'});
+$$('.tagline .w').forEach(w=>wio2.observe(w));
 
-// Observe project cards and scroll sections
-$$('.card, .rise').forEach(el => cio.observe(el));
-
-// Re-trigger animations when switching filter tabs
-$('.tabs')?.addEventListener('click', e => {
-  const tb = e.target.closest('button');
-  if (!tb) return;
-  tumble(tb, { dy: -14, r: -8, s: .88 });
-
-  requestAnimationFrame(() => $$('.card').forEach(c => {
-    c.classList.remove('pop');
-    if (!c.hidden) cio.observe(c);
-  }));
-});
-
-// const cio=new IntersectionObserver(es=>es.filter(e=>e.isIntersecting).forEach((e,k)=>{
-//   e.target.style.setProperty('--k',k);e.target.classList.add('pop');cio.unobserve(e.target)}),{threshold:.1,rootMargin:'0px 0px -5% 0px'});
-// $$('.card').forEach(c=>cio.observe(c));
-// $('.tabs')?.addEventListener('click',e=>{ const tb=e.target.closest('button');if(!tb)return;tumble(tb,{dy:-14,r:-8,s:.88}); // the tab you press tumbles
- 
-//   requestAnimationFrame(()=>$$('.card').forEach(c=>{c.classList.remove('pop');cio.observe(c)}))}); // runs after your own filter code
+/* 3d. HERO: when it is fully off screen, reset it; scrolling back to the top plays the entrance again */
+const hero=$('.hero');
+if(hero&&REPLAY)new IntersectionObserver(es=>es.forEach(e=>hero.classList.toggle('hero-reset',!e.isIntersecting))).observe(hero);
 
 /* 4. SCROLL: progress bar + gentle lag on the hero text. One requestAnimationFrame per frame, only transform and opacity change */
 const bar=document.createElement('div');bar.className='progress';bar.setAttribute('aria-hidden','true');document.body.prepend(bar);
@@ -99,17 +81,8 @@ if(dlg){
   // 5b. Keyboard navigation
   document.addEventListener('keydown',e=>{ if(!dlg.open)return;
     if(e.key=='ArrowLeft')$('.prev-btn',dlg)?.click(); if(e.key=='ArrowRight')$('.next-btn',dlg)?.click()});
-
-
-  // 5c. keyboard: left and right arrows change slide
-  document.addEventListener('keydown',e=>{ if(!dlg.open)return;
-    if(e.key=='ArrowLeft')$('.prev-btn',dlg)?.click(); if(e.key=='ArrowRight')$('.next-btn',dlg)?.click()});
 }
-}
-)();
 
-
-// /* 5. PROJECT POP UP */
 // const dlg=$('#dlg');
 // if(dlg){
 //   // 5a. fade and sink out instead of vanishing (button, backdrop click and Escape all go through here)
@@ -139,6 +112,4 @@ if(dlg){
 //   document.addEventListener('keydown',e=>{ if(!dlg.open)return;
 //     if(e.key=='ArrowLeft')$('.prev-btn',dlg)?.click(); if(e.key=='ArrowRight')$('.next-btn',dlg)?.click()});
 // }
-// }
-
-// )();
+})();
